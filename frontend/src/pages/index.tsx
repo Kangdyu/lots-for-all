@@ -1,12 +1,7 @@
-import styled from "@emotion/styled";
-
-const Test = styled.div`
-  width: 500px;
-  margin: 0 auto;
-`;
+import Layout from "components/common/Layout";
 
 function IndexPage() {
-  return <Test css={{ color: "dodgerblue" }}>모두의 추첨</Test>;
+  return <Layout>모두의 추첨</Layout>;
 }
 
 export default IndexPage;

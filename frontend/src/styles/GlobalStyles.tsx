@@ -35,6 +35,7 @@ export const globalStyles = (theme: Theme) => css`
   }
 
   body {
+    position: relative;
     background-color: ${theme.color.primary100};
   }
 

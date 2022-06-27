@@ -1,6 +1,6 @@
-import { css } from "@emotion/react";
+import { css, Global, Theme, useTheme } from "@emotion/react";
 
-export const globalStyles = css`
+export const globalStyles = (theme: Theme) => css`
   @font-face {
     font-family: "GmarketSans";
     src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff")
@@ -34,6 +34,10 @@ export const globalStyles = css`
     font-weight: 100;
   }
 
+  body {
+    background-color: ${theme.color.primary100};
+  }
+
   a {
     color: inherit;
     text-decoration: none;
@@ -43,3 +47,11 @@ export const globalStyles = css`
     box-sizing: border-box;
   }
 `;
+
+function GlobalStyles() {
+  const theme = useTheme();
+
+  return <Global styles={globalStyles(theme)} />;
+}
+
+export default GlobalStyles;

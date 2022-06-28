@@ -3,6 +3,7 @@ import Navigation from "components/common/Navigation";
 import GameSecton from "components/pages/pick/GameSection";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { GameRoute, GAMES } from "constants/games";
+import GameNavigation from "components/pages/pick/GameNavigation";
 
 interface Props {
   game: GameRoute;
@@ -13,6 +14,7 @@ function GamePage({ game }: Props) {
     <>
       <Navigation />
       <Layout>
+        <GameNavigation css={{ marginBottom: "60px" }} />
         <GameSecton game={game} />
       </Layout>
     </>

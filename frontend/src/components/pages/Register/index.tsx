@@ -1,18 +1,19 @@
 import { css } from "@emotion/react";
 import AuthFormContainer from "components/common/AuthFormContainer";
 import Button from "components/common/Button";
-import Input from "components/common/Input";
 import Link from "next/link";
 import { StyledA, StyledInput } from "./styles";
 
 function Register() {
-  function registerRequest() {
-    console.log("register Request Sent");
-    // 로그인 성공 시
-    // redirect to '/'
+  // TODO: registerRequest 만들기
 
-    // 로그인 실패 시
-  }
+  // function registerRequest() {
+  //   console.log("register Request Sent");
+  //   // 로그인 성공 시
+  //   // redirect to '/'
+
+  //   // 로그인 실패 시
+  // }
 
   return (
     <AuthFormContainer>

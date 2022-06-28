@@ -5,6 +5,8 @@ import Link from "next/link";
 import { StyledA, StyledInput } from "./styles";
 
 function Login() {
+  // TODO: loginRequest 만들기
+
   // function loginRequest() {
   //   console.log("login Request Sent");
   //   // 로그인 성공 시

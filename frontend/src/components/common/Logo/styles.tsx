@@ -4,8 +4,9 @@ import styled from "@emotion/styled";
 export const LogoContainer = styled.div`
   max-width: 500px;
   width: 100%;
-  margin: 160px auto 60px;
-  padding: 0;
+
+  margin: 0 auto 60px;
+  padding: 160px 0 0;
 `;
 
 export const logoStyle = css`

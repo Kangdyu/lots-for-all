@@ -28,6 +28,12 @@ export const globalStyles = (theme: Theme) => css`
     font-style: normal;
   }
 
+  #modal-root {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
   html,
   body {
     padding: 0;

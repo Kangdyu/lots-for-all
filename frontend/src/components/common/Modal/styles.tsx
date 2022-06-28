@@ -13,6 +13,7 @@ export const StyledModal = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  z-index: 100;
 `;
 
 export const StyledModalButton = styled.div`
@@ -27,13 +28,18 @@ export const StyledModalTitle = styled.span`
   display: block;
 `;
 
-export const StyledModalQuitButton = styled.div`
+export const StyledModalQuitButton = styled.button`
+  border: none;
+  outline: none;
+  cursor: pointer;
   width: 24px;
   height: 24px;
   text-align: center;
   font-weight: 400;
   font-size: 24px;
-  padding: 1px 4px 3px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: white;
   background-color: #d9d9d9;
   border-radius: 12px;
@@ -49,4 +55,18 @@ export const TitleAndQuitButton = styled.div`
 export const StyledModalContent = styled.div`
   margin: 24px 0;
   height: 100%;
+`;
+
+export const Dimmed = styled.div`
+  z-index: 50;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
 `;

@@ -6,12 +6,12 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
 }
 
-function Input({ children, valid = true, label, ...props }: Props) {
+function Input({ children, className, valid = true, label, ...props }: Props) {
   return (
-    <>
+    <div className={className}>
       {label && <StyledInputLabel>{label}</StyledInputLabel>}
       <StyledInput valid={valid} {...props} />
-    </>
+    </div>
   );
 }
 

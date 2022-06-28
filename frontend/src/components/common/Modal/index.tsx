@@ -1,4 +1,4 @@
-import { HTMLAttributes, MouseEventHandler, useEffect, useState } from "react";
+import { HTMLAttributes, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import Button from "../Button";
 import {

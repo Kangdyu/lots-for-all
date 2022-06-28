@@ -17,7 +17,8 @@ function Register() {
   return (
     <AuthFormContainer>
       <form>
-        <StyledInput label="아이디" type={"text"} placeholder="영문, 숫자 3 ~ 20자" />
+        <StyledInput label="이메일" type={"text"} placeholder="이메일 입력" />
+        <StyledInput label="닉네임" type={"text"} placeholder="닉네임 1 ~ 10자" />
         <StyledInput
           label="비밀번호"
           type={"password"}

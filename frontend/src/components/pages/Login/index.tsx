@@ -5,18 +5,18 @@ import Link from "next/link";
 import { StyledA, StyledInput } from "./styles";
 
 function Login() {
-  function loginRequest() {
-    console.log("login Request Sent");
-    // 로그인 성공 시
-    // redirect to '/'
+  // function loginRequest() {
+  //   console.log("login Request Sent");
+  //   // 로그인 성공 시
+  //   // redirect to '/'
 
-    // 로그인 실패 시
-  }
+  //   // 로그인 실패 시
+  // }
 
   return (
     <AuthFormContainer>
       <form>
-        <StyledInput type="text" placeholder="아이디" />
+        <StyledInput type="text" placeholder="이메일" />
         <StyledInput type="password" placeholder="비밀번호" />
         <Button
           css={css`

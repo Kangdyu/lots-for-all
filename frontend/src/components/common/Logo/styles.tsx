@@ -13,13 +13,13 @@ export const logoStyle = css`
   text-align: center;
 `;
 
-export const LogoBigTitle = styled.span`
+export const LogoBigTitle = styled.h1`
   ${logoStyle};
   font-size: 79px;
   color: ${(props) => props.theme.color.primary700};
 `;
 
-export const LogoSmallTitle = styled.span`
+export const LogoSmallTitle = styled.h2`
   ${logoStyle};
   font-size: 22px;
   color: ${(props) => props.theme.color.primary700};

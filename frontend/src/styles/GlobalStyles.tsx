@@ -1,6 +1,9 @@
 import { css, Global, Theme, useTheme } from "@emotion/react";
+import { resetCSS } from "./reset";
 
 export const globalStyles = (theme: Theme) => css`
+  ${resetCSS};
+
   @font-face {
     font-family: "GmarketSans";
     src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff")

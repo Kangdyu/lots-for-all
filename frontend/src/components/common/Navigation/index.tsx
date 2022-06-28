@@ -3,7 +3,7 @@ import Button from "components/common/Button";
 import { NavBar, NavBarContainer, NavBarContent, NavBarLogo } from "./styles";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ROUTES } from "constants/routes";
+import { NAV_ROUTES } from "constants/routes";
 
 interface Props extends HTMLAttributes<HTMLElement> {
   loggedIn?: boolean;
@@ -21,7 +21,7 @@ function Navigation({ loggedIn = false, ...props }: Props) {
             <NavBarLogo>모두의 추첨</NavBarLogo>
           </Link>
 
-          {ROUTES.map((route) => (
+          {NAV_ROUTES.map((route) => (
             <Link key={route.path} href={route.path} passHref>
               <NavBarContent selected={pathname === route.path}>{route.name}</NavBarContent>
             </Link>

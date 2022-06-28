@@ -1,4 +1,4 @@
-import { HTMLAttributes, useEffect, useState } from "react";
+import { HTMLAttributes, MouseEventHandler, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import Button from "../Button";
 import {
@@ -35,7 +35,12 @@ function Modal({
   }, []);
 
   const modalContent = show ? (
-    <Dimmed>
+    <Dimmed
+      onClick={({ target, currentTarget }) => {
+        if (target !== currentTarget) return;
+        onClose();
+      }}
+    >
       <StyledModal {...props}>
         <TitleAndQuitButton>
           <StyledModalTitle>{title}</StyledModalTitle>

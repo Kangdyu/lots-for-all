@@ -59,7 +59,7 @@ function Login() {
           로그인
         </Button>
       </form>
-      <Link href={""}>
+      <Link href={"/register"}>
         <StyledA>계정이 없으신가요? 회원가입하기 &gt;</StyledA>
       </Link>
     </Container>

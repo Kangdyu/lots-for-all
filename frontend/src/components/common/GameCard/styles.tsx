@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { hexToRgba } from "utils/color";
 
 export const GameCardContainer = styled.div`
   display: flex;
@@ -14,6 +15,7 @@ export const GameCardContainer = styled.div`
   overflow: hidden;
 
   background-color: ${(props) => props.theme.color.white};
+  box-shadow: 0 6px 16px 0 ${(props) => hexToRgba(props.theme.color.primary700, 0.1)};
 `;
 
 export const GameCardName = styled.span`

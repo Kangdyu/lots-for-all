@@ -1,14 +1,7 @@
-import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import Input from "components/common/Input";
 
 // styled 에도 사용 가능
-
-export const Container = styled.div`
-  max-width: 260px;
-  width: 100%;
-  padding: 0;
-`;
 
 export const StyledA = styled.a`
   font-size: 14px;

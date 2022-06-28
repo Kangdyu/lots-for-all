@@ -1,4 +1,3 @@
-import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import Input from "components/common/Input";
 
@@ -11,12 +10,6 @@ export const StyledA = styled.a`
   text-align: center;
   text-decoration: underline;
   color: ${(props) => props.theme.color.primary700};
-`;
-
-export const Container = styled.div`
-  max-width: 260px;
-  width: 100%;
-  padding: 0;
 `;
 
 export const StyledInput = styled(Input)`

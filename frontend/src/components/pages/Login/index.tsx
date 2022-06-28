@@ -1,7 +1,8 @@
 import { css } from "@emotion/react";
+import AuthFormContainer from "components/common/AuthFormContainer";
 import Button from "components/common/Button";
 import Link from "next/link";
-import { Container, StyledA, StyledInput } from "./styles";
+import { StyledA, StyledInput } from "./styles";
 
 function Login() {
   function loginRequest() {
@@ -13,7 +14,7 @@ function Login() {
   }
 
   return (
-    <Container>
+    <AuthFormContainer>
       <form>
         <StyledInput type="text" placeholder="아이디" />
         <StyledInput type="password" placeholder="비밀번호" />
@@ -29,7 +30,7 @@ function Login() {
       <Link href={"/register"}>
         <StyledA>계정이 없으신가요? 회원가입하기 &gt;</StyledA>
       </Link>
-    </Container>
+    </AuthFormContainer>
   );
 }
 

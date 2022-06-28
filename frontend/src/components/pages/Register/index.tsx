@@ -1,8 +1,9 @@
 import { css } from "@emotion/react";
+import AuthFormContainer from "components/common/AuthFormContainer";
 import Button from "components/common/Button";
 import Input from "components/common/Input";
 import Link from "next/link";
-import { StyledA, Container, StyledInput } from "./styles";
+import { StyledA, StyledInput } from "./styles";
 
 function Register() {
   function registerRequest() {
@@ -14,7 +15,7 @@ function Register() {
   }
 
   return (
-    <Container>
+    <AuthFormContainer>
       <form>
         <StyledInput label="아이디" type={"text"} placeholder="영문, 숫자 3 ~ 20자" />
         <StyledInput
@@ -39,7 +40,7 @@ function Register() {
       <Link href={"/login"}>
         <StyledA>이미 회원이신가요? 로그인하러 가기 &gt;</StyledA>
       </Link>
-    </Container>
+    </AuthFormContainer>
   );
 }
 

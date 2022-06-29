@@ -1,10 +1,9 @@
-import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // styled 에도 사용 가능
 export const StyledInput = styled.input<{ valid: boolean }>`
   outline: none;
-  padding: 18px;
+  padding: 15px 18px 12px;
   border-radius: 8px;
   color: ${(props) => props.theme.color.black};
   font: inherit;

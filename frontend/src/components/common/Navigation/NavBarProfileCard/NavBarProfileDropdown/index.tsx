@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { HTMLAttributes, useContext } from "react";
-import { MenuBarContext } from "shared/MenuBarContext";
+import { HTMLAttributes } from "react";
+
 import logout from "utils/logout";
 import {
   StyledDropdownDangerItem,
@@ -9,14 +9,12 @@ import {
   StyledNavBarProfileDropdown,
 } from "./styles";
 
-interface Props extends HTMLAttributes<HTMLDivElement> {}
+interface Props extends HTMLAttributes<HTMLDivElement> {
+  isShown: boolean;
+}
 
-function NavBarProfileDropdown({ ...props }: Props) {
-  const context = useContext(MenuBarContext);
-
-  if (context == null) throw new Error();
-
-  if (context.isShown) {
+function NavBarProfileDropdown({ isShown, ...props }: Props) {
+  if (isShown) {
     return (
       <StyledNavBarProfileDropdown {...props}>
         <Link href="/settings">

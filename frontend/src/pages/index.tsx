@@ -1,5 +1,5 @@
 import Layout from "components/common/Layout";
-import NavBarProfileDropdown from "components/common/NavBarProfileDropdown";
+
 import Navigation from "components/common/Navigation";
 import { useState } from "react";
 import { MenuBarContext } from "shared/MenuBarContext";
@@ -19,8 +19,6 @@ function IndexPage() {
   return (
     <MenuBarContext.Provider value={{ isShown, setIsShown }}>
       <Navigation />
-
-      <NavBarProfileDropdown />
       <Layout>모두의 추첨</Layout>
     </MenuBarContext.Provider>
   );

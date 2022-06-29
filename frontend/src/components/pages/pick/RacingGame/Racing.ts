@@ -5,7 +5,7 @@ interface DrawHorseOption {
   name: string;
   x: number;
   y: number;
-  velocity: number;
+  rank?: number;
 }
 
 interface Player {
@@ -13,6 +13,8 @@ interface Player {
   velocity: number;
   x: number;
   y: number;
+  goal: boolean;
+  rank?: number;
 }
 
 export class Racing {
@@ -30,6 +32,7 @@ export class Racing {
 
   private inGame: boolean;
   private players: Player[];
+  private ranking: string[];
 
   constructor(
     canvasWidth: number,
@@ -59,7 +62,10 @@ export class Racing {
       velocity: Math.random() * 0.5,
       x: 10,
       y: 50 + (this.imageHeight + 30) * idx,
+      goal: false,
+      rank: undefined,
     }));
+    this.ranking = [];
   }
 
   drawStage(ctx: CanvasRenderingContext2D) {
@@ -88,8 +94,21 @@ export class Racing {
     ctx.fillStyle = "black";
     ctx.fillText(option.name, this.imageWidth / 2 + option.x, option.y - 10);
 
-    ctx.font = "8px GmarketSans";
-    ctx.fillText(option.velocity.toString(), this.imageWidth / 2 + option.x, option.y - 20);
+    if (option.rank) {
+      ctx.font = "18px GmarketSans";
+      if (option.rank === 1) {
+        ctx.fillStyle = "#E5B80B";
+      } else if (option.rank === 2) {
+        ctx.fillStyle = "#A8A9AD";
+      } else if (option.rank === 3) {
+        ctx.fillStyle = "#CD7F32";
+      }
+      ctx.fillText(
+        option.rank.toString(),
+        this.imageWidth + option.x + 20,
+        this.imageHeight / 2 + option.y
+      );
+    }
   }
 
   getVelocityDeltaWithScore(currentVelocity: number) {
@@ -106,20 +125,26 @@ export class Racing {
   }
 
   update(ctx: CanvasRenderingContext2D) {
-    this.drawStage(ctx);
-
     if (this.inGame) {
       this.players.forEach((player) => {
-        player.velocity += this.getVelocityDeltaWithScore(player.velocity);
-        player.x += player.velocity;
-        if (player.x <= 0) player.x = 0;
+        if (!player.goal) {
+          player.velocity += this.getVelocityDeltaWithScore(player.velocity);
+          player.x += player.velocity;
+          if (player.x >= this.canvasWidth - 120) {
+            this.ranking.push(player.name);
+            player.goal = true;
+            player.rank = this.ranking.length;
+          }
+          if (player.x <= 0) player.x = 0;
+        }
         this.drawHorse(ctx, {
           name: player.name,
           x: player.x,
           y: player.y,
-          velocity: player.velocity,
+          rank: player.rank,
         });
       });
     }
+    this.drawStage(ctx);
   }
 }

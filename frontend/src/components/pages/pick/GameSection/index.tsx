@@ -2,6 +2,7 @@ import Button from "components/common/Button";
 import SectionTitle from "components/common/SectionTitle";
 import { GameRoute } from "constants/games";
 import { FormEvent, HTMLAttributes, useCallback, useRef, useState } from "react";
+import NameTag from "../NameTag";
 import { Flex, StyledInput } from "./styles";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
@@ -45,9 +46,9 @@ function GameSecton({ game, ...props }: Props) {
         <SectionTitle css={{ marginBottom: "12px" }}>참여 인원</SectionTitle>
         <Flex>
           {list.map((item, idx) => (
-            <span key={idx} css={{ marginRight: "8px" }}>
+            <NameTag key={idx} css={{ marginRight: "8px" }}>
               {item}
-            </span>
+            </NameTag>
           ))}
         </Flex>
       </form>

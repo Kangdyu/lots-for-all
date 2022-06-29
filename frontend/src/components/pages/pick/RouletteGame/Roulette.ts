@@ -1,3 +1,6 @@
+import { Dispatch, SetStateAction } from "react";
+import { RouletteGameStatus } from ".";
+
 interface DrawArcOption {
   name: string;
   color: string;
@@ -9,6 +12,8 @@ export class Roulette {
   private centerX: number;
   private centerY: number;
   private participants: string[];
+  private setGameStatus: Dispatch<SetStateAction<RouletteGameStatus>>;
+  private setWinner: Dispatch<SetStateAction<string>>;
 
   private radius: number;
   private colorPalette: string[];
@@ -16,17 +21,25 @@ export class Roulette {
 
   private winner: string;
   private rotation: number;
-  public inGame: boolean;
+  private inGame: boolean;
   private rolling: boolean;
 
-  constructor(canvasWidth: number, canvasHeight: number, participants: string[]) {
+  constructor(
+    canvasWidth: number,
+    canvasHeight: number,
+    participants: string[],
+    setGameStatus: Dispatch<SetStateAction<RouletteGameStatus>>,
+    setWinner: Dispatch<SetStateAction<string>>
+  ) {
     this.centerX = canvasWidth / 2;
     this.centerY = canvasHeight / 2 + 30;
     this.participants = participants;
+    this.setGameStatus = setGameStatus;
+    this.setWinner = setWinner;
 
     this.radius = 280;
     this.colorPalette = ["#FD89AD", "#FEBB9E", "#FBFF96", "#B1FFA2", "#AFCEFF", "#B999FE"];
-    this.velocity = 0.1;
+    this.velocity = 0.2;
 
     this.winner = "";
     this.rotation = 0;
@@ -120,6 +133,8 @@ export class Roulette {
 
       if (this.velocity <= 0) {
         this.inGame = false;
+        this.setGameStatus(RouletteGameStatus.END);
+        this.setWinner(this.winner);
       }
     }
     this.draw(ctx);

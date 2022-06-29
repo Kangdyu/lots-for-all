@@ -1,7 +1,8 @@
-import { createContext } from "react";
+import { createContext, Dispatch, SetStateAction } from "react";
 
-export const MenuBarContext = createContext({
-  // 기본값을 넣어둠 -> 적지 않아도 상관은 없다.
-  isShown: false,
-  setIsShown: (isShown: Boolean) => {},
-});
+interface MenuBarContextValue {
+  isShown: boolean;
+  setIsShown: Dispatch<SetStateAction<boolean>>;
+}
+
+export const MenuBarContext = createContext<MenuBarContextValue | null>(null);

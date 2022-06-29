@@ -1,5 +1,3 @@
-import axios from "axios";
-import Button from "components/common/Button";
 import Layout from "components/common/Layout";
 import NavBarProfileDropdown from "components/common/NavBarProfileDropdown";
 import Navigation from "components/common/Navigation";
@@ -20,7 +18,7 @@ function IndexPage() {
 
   return (
     <MenuBarContext.Provider value={{ isShown, setIsShown }}>
-      <Navigation loggedIn={true} />
+      <Navigation />
 
       <NavBarProfileDropdown />
       <Layout>모두의 추첨</Layout>

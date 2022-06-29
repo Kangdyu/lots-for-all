@@ -12,9 +12,11 @@ import {
 interface Props extends HTMLAttributes<HTMLDivElement> {}
 
 function NavBarProfileDropdown({ ...props }: Props) {
-  const { isShown } = useContext(MenuBarContext);
+  const context = useContext(MenuBarContext);
 
-  if (isShown) {
+  if (context == null) throw new Error();
+
+  if (context.isShown) {
     return (
       <StyledNavBarProfileDropdown {...props}>
         <Link href="/settings">
@@ -25,6 +27,8 @@ function NavBarProfileDropdown({ ...props }: Props) {
         <StyledDropdownDangerItem onClick={logout}>로그아웃</StyledDropdownDangerItem>
       </StyledNavBarProfileDropdown>
     );
+  } else {
+    return null;
   }
 }
 

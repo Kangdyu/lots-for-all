@@ -6,14 +6,12 @@ import { useRouter } from "next/router";
 import { NAV_ROUTES } from "constants/routes";
 import NavBarProfileCard from "../NavBarProfileCard";
 
-interface Props extends HTMLAttributes<HTMLElement> {
-  loggedIn?: boolean;
-}
+interface Props extends HTMLAttributes<HTMLElement> {}
 
 // TODO: 로그인 구현 시 loggedIn prop 활용하여 수정
-function Navigation({ loggedIn = false, ...props }: Props) {
+function Navigation({ ...props }: Props) {
   const { pathname } = useRouter();
-
+  const loggedIn = true;
   return (
     <NavBar {...props}>
       <NavBarContainer>

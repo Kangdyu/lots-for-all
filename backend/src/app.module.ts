@@ -3,10 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
+import { GroupsModule } from './groups/groups.module';
 const config = require('../ormconfig')[process.env.NODE_ENV || 'development'];
 
 @Module({
-  imports: [TypeOrmModule.forRoot(config['db']), UsersModule],
+  imports: [TypeOrmModule.forRoot(config['db']), UsersModule, GroupsModule],
   controllers: [AppController],
   providers: [AppService],
 })

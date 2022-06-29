@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Group } from 'src/groups/entities/groups.entitiy';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -16,4 +17,7 @@ export class User {
 
   @Column({ type: 'varchar', length: '255', nullable: true })
   imageUrl: string;
+
+  @OneToMany(() => Group, (group) => group.user)
+  groups: Group[];
 }

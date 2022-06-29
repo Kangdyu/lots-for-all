@@ -8,6 +8,8 @@ import { LoginDto } from './dto/login-dto';
 import { JwtService } from '@nestjs/jwt';
 import { CommonResponse } from 'src/common/interfaces/CommonResponse';
 import { UserInfoDto } from './dto/user-info.dto';
+import { Request } from 'express';
+import { Payload } from './jwt/jwt.payload';
 
 @Injectable()
 export class UsersService {
@@ -18,7 +20,7 @@ export class UsersService {
 
   private SALT_OR_ROUNDS = 10;
 
-  private async checkUserExist(critria: { id?: number; email?: string }): Promise<User> {
+  async checkUserExist(critria: { id?: number; email?: string }): Promise<User> {
     const user: User = await this.usersRepository.findOneBy(critria);
     if (!user) {
       throw new BadRequestException('Cannot find user');
@@ -53,7 +55,7 @@ export class UsersService {
     };
   }
 
-  async login(loginDto: LoginDto): Promise<CommonResponse<{ token: string }>> {
+  async login(loginDto: LoginDto): Promise<CommonResponse<UserInfoDto & { token: string }>> {
     const { email, password } = loginDto;
 
     const user: User = await this.checkUserExist({ email });
@@ -64,8 +66,22 @@ export class UsersService {
     }
     return {
       result: {
+        ...this.entityToDto(user),
         token: this.jwtService.sign({ email: email, sub: user.id }),
       },
+      message: 'success',
+    };
+  }
+
+  async logined(req: Request): Promise<CommonResponse<UserInfoDto>> {
+    const decodedJwt = (await this.jwtService.decode(
+      req.headers.authorization.split(' ')[1]
+    )) as Payload;
+
+    return {
+      result: this.entityToDto(
+        await this.usersRepository.findOneBy({ id: parseInt(decodedJwt.sub) })
+      ),
       message: 'success',
     };
   }

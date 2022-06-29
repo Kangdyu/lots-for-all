@@ -1,7 +1,7 @@
-import { css } from "@emotion/react";
 import Link from "next/link";
 import { HTMLAttributes, useContext } from "react";
 import { MenuBarContext } from "shared/MenuBarContext";
+import logout from "utils/logout";
 import {
   StyledDropdownDangerItem,
   StyledDropdownItem,
@@ -13,6 +13,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {}
 
 function NavBarProfileDropdown({ ...props }: Props) {
   const { isShown } = useContext(MenuBarContext);
+
   if (isShown) {
     return (
       <StyledNavBarProfileDropdown {...props}>
@@ -21,7 +22,7 @@ function NavBarProfileDropdown({ ...props }: Props) {
         </Link>
 
         <StyledDropdownSeparator />
-        <StyledDropdownDangerItem>로그아웃</StyledDropdownDangerItem>
+        <StyledDropdownDangerItem onClick={logout}>로그아웃</StyledDropdownDangerItem>
       </StyledNavBarProfileDropdown>
     );
   }

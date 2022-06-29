@@ -3,6 +3,7 @@ import axios from "axios";
 import AuthFormContainer from "components/common/AuthFormContainer";
 import Button from "components/common/Button";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { FormEvent, useRef } from "react";
 
 import { StyledA, StyledInput } from "./styles";
@@ -24,6 +25,7 @@ interface FormValue {
 }
 
 function Login() {
+  const router = useRouter();
   const data: FormValue = { email: "", password: "" };
 
   async function loginRequest(data: FormValue) {
@@ -33,6 +35,7 @@ function Login() {
       .then((response) => {
         console.log(response.data.result.token);
         localStorage.setItem("token", response.data.result.token);
+        router.push("/");
       })
       .catch((error) => {
         console.log(error);

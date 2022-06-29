@@ -1,16 +1,31 @@
+interface DrawArcOption {
+  name: string;
+  color: string;
+  rotation: number;
+  angle: number;
+}
+
 export class Roulette {
   private centerX: number;
   private centerY: number;
   private participants: string[];
+
   private radius: number;
   private colorPalette: string[];
+  private velocity: number;
+
+  private rotation: number;
 
   constructor(canvasWidth: number, canvasHeight: number, participants: string[]) {
     this.centerX = canvasWidth / 2;
     this.centerY = canvasHeight / 2 + 30;
     this.participants = participants;
+
     this.radius = 280;
     this.colorPalette = ["#FD89AD", "#FEBB9E", "#FBFF96", "#B1FFA2", "#AFCEFF", "#B999FE"];
+    this.velocity = 0.2;
+
+    this.rotation = 0;
   }
 
   getColor(i: number) {
@@ -20,35 +35,40 @@ export class Roulette {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    this.drawParticipants(ctx);
+    const angle = (Math.PI * 2) / this.participants.length;
+    this.participants.map((participant, idx) =>
+      this.drawArc(ctx, {
+        name: participant,
+        color: this.getColor(idx),
+        rotation: this.rotation + angle * idx,
+        angle,
+      })
+    );
     this.drawBoard(ctx);
   }
 
-  drawParticipants(ctx: CanvasRenderingContext2D) {
-    const count = this.participants.length;
-    const arcLength = (Math.PI * 2) / count;
-
+  drawArc(ctx: CanvasRenderingContext2D, options: DrawArcOption) {
     ctx.font = "30px GmarketSans";
 
-    this.participants.forEach((participant, idx) => {
-      ctx.beginPath();
-      ctx.save();
-      ctx.moveTo(this.centerX, this.centerY);
-      ctx.arc(this.centerX, this.centerY, this.radius, arcLength * idx, arcLength * (idx + 1));
-      ctx.fillStyle = this.getColor(idx);
-      ctx.fill();
-      ctx.stroke();
-      ctx.restore();
+    ctx.save();
+    ctx.translate(this.centerX, this.centerY);
+    ctx.rotate(options.rotation);
 
-      ctx.save();
-      ctx.translate(this.centerX, this.centerY);
-      ctx.rotate(arcLength * (idx + 0.5));
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.arc(0, 0, this.radius, 0, options.angle);
+    ctx.fillStyle = options.color;
+    ctx.fill();
 
-      ctx.beginPath();
-      ctx.fillStyle = "black";
-      ctx.fillText(participant, this.radius / 2.5, 8);
-      ctx.restore();
-    });
+    ctx.restore();
+
+    ctx.save();
+    ctx.translate(this.centerX, this.centerY);
+    ctx.rotate(options.rotation + options.angle * 0.5);
+    ctx.beginPath();
+    ctx.fillStyle = "black";
+    ctx.fillText(options.name, this.radius / 2.5, 8);
+    ctx.restore();
   }
 
   drawBoard(ctx: CanvasRenderingContext2D) {
@@ -63,5 +83,10 @@ export class Roulette {
     ctx.lineTo(this.centerX, 115);
     ctx.fillStyle = "black";
     ctx.fill();
+  }
+
+  update(ctx: CanvasRenderingContext2D) {
+    this.rotation += this.velocity;
+    this.draw(ctx);
   }
 }

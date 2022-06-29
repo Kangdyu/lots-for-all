@@ -27,9 +27,19 @@ function useCanvas(
     }
     initCanvas();
 
-    if (ctx) {
-      animate(ctx);
+    let requestId: number;
+    function requestAnimaion() {
+      requestId = window.requestAnimationFrame(requestAnimaion);
+
+      if (ctx) {
+        animate(ctx);
+      }
     }
+    requestAnimaion();
+
+    return () => {
+      window.cancelAnimationFrame(requestId);
+    };
   }, [canvasWidth, canvasHeight, animate]);
 
   return canvasRef;

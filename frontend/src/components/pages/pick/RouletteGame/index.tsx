@@ -10,7 +10,7 @@ interface Props extends CanvasHTMLAttributes<HTMLCanvasElement> {
 
 function RouletteGame({ canvasWidth, canvasHeight, participants, ...props }: Props) {
   const fillBackground = (ctx: CanvasRenderingContext2D) => {
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle = "#F0F0FC";
     ctx.fillRect(0, 0, canvasWidth, canvasHeight);
   };
 
@@ -18,7 +18,7 @@ function RouletteGame({ canvasWidth, canvasHeight, participants, ...props }: Pro
 
   const animate = (ctx: CanvasRenderingContext2D) => {
     fillBackground(ctx);
-    roulette.draw(ctx);
+    roulette.update(ctx);
   };
 
   const canvasRef = useCanvas(canvasWidth, canvasHeight, animate);

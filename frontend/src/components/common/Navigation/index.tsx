@@ -64,7 +64,9 @@ function Navigation({ ...props }: Props) {
           {loggedIn ? (
             <NavBarProfileCard name="홍길동은아버지를아버지라" />
           ) : (
-            <Button>로그인</Button>
+            <Link href="/login">
+              <Button>로그인</Button>
+            </Link>
           )}
         </div>
       </NavBarContainer>

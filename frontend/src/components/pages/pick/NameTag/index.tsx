@@ -1,10 +1,15 @@
 import { HTMLAttributes } from "react";
-import { Tag } from "./styles";
+import { DeleteButton, Tag } from "./styles";
 
 interface Props extends HTMLAttributes<HTMLSpanElement> {}
 
 function NameTag({ children, ...props }: Props) {
-  return <Tag {...props}>{children}</Tag>;
+  return (
+    <Tag {...props}>
+      <DeleteButton>×</DeleteButton>
+      {children}
+    </Tag>
+  );
 }
 
 export default NameTag;

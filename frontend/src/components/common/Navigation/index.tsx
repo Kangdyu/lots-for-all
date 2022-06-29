@@ -4,6 +4,7 @@ import { NavBar, NavBarContainer, NavBarContent, NavBarLogo } from "./styles";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { NAV_ROUTES } from "constants/routes";
+import NavBarProfileCard from "../NavBarProfileCard";
 
 interface Props extends HTMLAttributes<HTMLElement> {
   loggedIn?: boolean;
@@ -28,7 +29,13 @@ function Navigation({ loggedIn = false, ...props }: Props) {
           ))}
         </div>
 
-        <div>{loggedIn ? <></> : <Button>로그인</Button>}</div>
+        <div>
+          {loggedIn ? (
+            <NavBarProfileCard name="홍길동은아버지를아버지라" />
+          ) : (
+            <Button>로그인</Button>
+          )}
+        </div>
       </NavBarContainer>
     </NavBar>
   );

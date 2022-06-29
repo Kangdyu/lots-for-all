@@ -9,6 +9,11 @@ axios.defaults.headers.common["Authorization"] = "AUTH TOKEN";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  // TODO: token 확인 후 ...
+  // if (localStorage.getItem("token")) { // 이미 localStorage 에 token 이 있으면
+
+  // }
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />

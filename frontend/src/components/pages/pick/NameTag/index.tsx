@@ -14,6 +14,7 @@ function NameTag({ children, onDelete, onNameChange, ...props }: Props) {
       inputRef.current.addEventListener("blur", () => {
         if (inputRef.current) {
           inputRef.current.style.display = "none";
+          inputRef.current.value = "";
         }
       });
     }

@@ -62,7 +62,7 @@ function GameSecton({ game, ...props }: Props) {
       return (
         <RacingGame
           canvasWidth={width}
-          canvasHeight={200 + nameList.length * 100}
+          canvasHeight={100 + nameList.length * 65}
           participants={nameList.map((item) => item.name)}
         />
       );

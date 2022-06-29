@@ -1,14 +1,26 @@
 import { Dispatch, SetStateAction } from "react";
 import { RacingGameStatus } from ".";
 
+interface DrawHorseOption {
+  name: string;
+  x: number;
+  y: number;
+}
+
 export class Racing {
-  private inGame: boolean;
+  private canvasWidth: number;
+  private canvasHeight: number;
+  private participants: string[];
+  private setGameStatus: Dispatch<SetStateAction<RacingGameStatus>>;
+  private setResult: Dispatch<SetStateAction<string[]>>;
 
   private horseImage: HTMLImageElement;
   private originalImageWidth: number;
   private originalImageHeight: number;
   private imageWidth: number;
   private imageHeight: number;
+
+  private inGame: boolean;
 
   constructor(
     canvasWidth: number,
@@ -17,6 +29,12 @@ export class Racing {
     setGameStatus: Dispatch<SetStateAction<RacingGameStatus>>,
     setResult: Dispatch<SetStateAction<string[]>>
   ) {
+    this.canvasWidth = canvasWidth;
+    this.canvasHeight = canvasHeight;
+    this.participants = participants;
+    this.setGameStatus = setGameStatus;
+    this.setResult = setResult;
+
     this.inGame = false;
 
     this.horseImage = new Image();
@@ -25,23 +43,43 @@ export class Racing {
     this.horseImage.addEventListener("load", () => (this.inGame = true), false);
     this.originalImageWidth = 548;
     this.originalImageHeight = 430;
-    this.imageWidth = 90;
-    this.imageHeight = 65;
+    this.imageWidth = 60;
+    this.imageHeight = 40;
+  }
+
+  drawStage(ctx: CanvasRenderingContext2D) {
+    ctx.beginPath();
+    ctx.moveTo(this.canvasWidth - 120, 0);
+    ctx.lineTo(this.canvasWidth - 120, this.canvasHeight);
+    ctx.lineWidth = 5;
+    ctx.stroke();
+  }
+
+  drawHorse(ctx: CanvasRenderingContext2D, option: DrawHorseOption) {
+    ctx.drawImage(
+      this.horseImage,
+      0,
+      0,
+      this.originalImageWidth,
+      this.originalImageHeight,
+      option.x,
+      option.y,
+      this.imageWidth,
+      this.imageHeight
+    );
+
+    ctx.font = "14px GmarketSans";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "black";
+    ctx.fillText(option.name, this.imageWidth / 2 + option.x, option.y - 10);
   }
 
   update(ctx: CanvasRenderingContext2D) {
     if (this.inGame) {
-      ctx.drawImage(
-        this.horseImage,
-        0,
-        0,
-        this.originalImageWidth,
-        this.originalImageHeight,
-        0,
-        0,
-        this.imageWidth,
-        this.imageHeight
-      );
+      this.drawStage(ctx);
+      this.participants.forEach((participant, idx) => {
+        this.drawHorse(ctx, { name: participant, x: 10, y: 50 + (this.imageHeight + 30) * idx });
+      });
     }
   }
 }

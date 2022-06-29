@@ -50,3 +50,21 @@ export const DeleteButton = styled.button`
     background-color: ${(props) => props.theme.color.red900};
   }
 `;
+
+export const RenameInput = styled.input`
+  display: none;
+
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 80%;
+
+  font: inherit;
+
+  border: none;
+  border-radius: 50px;
+  outline: none;
+
+  background-color: ${(props) => props.theme.color.primary300};
+`;

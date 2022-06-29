@@ -59,6 +59,13 @@ function GameSecton({ game, ...props }: Props) {
           <StyledNameTag
             key={item.id}
             onDelete={() => setNameList((p) => p.filter((pItem) => pItem.id !== item.id))}
+            onNameChange={(changedName) =>
+              setNameList((p) => {
+                const newList = [...p];
+                newList.find((nItem) => nItem.id === item.id)!.name = changedName;
+                return newList;
+              })
+            }
           >
             {item.name}
           </StyledNameTag>

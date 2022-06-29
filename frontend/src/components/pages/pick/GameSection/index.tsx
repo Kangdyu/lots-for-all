@@ -4,12 +4,17 @@ import { GameRoute } from "constants/games";
 import { FormEvent, HTMLAttributes, useCallback, useRef, useState } from "react";
 import { Flex, NameListContainer, NameListForm, StyledInput, StyledNameTag } from "./styles";
 
+interface NameListItem {
+  id: string;
+  name: string;
+}
+
 interface Props extends HTMLAttributes<HTMLDivElement> {
   game: GameRoute;
 }
 
 function GameSecton({ game, ...props }: Props) {
-  const [list, setList] = useState<string[]>([]);
+  const [nameList, setNameList] = useState<NameListItem[]>([]);
 
   const nameInputRef = useRef<HTMLInputElement>(null);
   const handleListSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
@@ -18,7 +23,7 @@ function GameSecton({ game, ...props }: Props) {
     if (nameInputRef.current) {
       const name = nameInputRef.current.value;
       if (name === "") return;
-      setList((p) => p.concat(name));
+      setNameList((p) => p.concat({ id: Date.now().toString(), name }));
       nameInputRef.current.value = "";
     }
   }, []);
@@ -50,8 +55,13 @@ function GameSecton({ game, ...props }: Props) {
 
       <SectionTitle css={{ marginBottom: "24px" }}>참여 인원</SectionTitle>
       <NameListContainer>
-        {list.map((item, idx) => (
-          <StyledNameTag key={idx}>{item}</StyledNameTag>
+        {nameList.map((item) => (
+          <StyledNameTag
+            key={item.id}
+            onDelete={() => setNameList((p) => p.filter((pItem) => pItem.id !== item.id))}
+          >
+            {item.name}
+          </StyledNameTag>
         ))}
       </NameListContainer>
     </section>

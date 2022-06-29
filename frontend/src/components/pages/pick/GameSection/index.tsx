@@ -71,6 +71,8 @@ function GameSecton({ game, ...props }: Props) {
           </StyledNameTag>
         ))}
       </NameListContainer>
+
+      <Button css={{ display: "block", margin: "0 auto" }}>게임 시작</Button>
     </section>
   );
 }

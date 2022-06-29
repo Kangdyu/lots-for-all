@@ -4,6 +4,7 @@ import NameTag from "../NameTag";
 
 export const Flex = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 export const FlexColumn = styled(Flex)`
@@ -16,12 +17,13 @@ export const StyledInput = styled(Input)`
 
 export const NameListForm = styled.form`
   display: flex;
+  align-items: flex-end;
 `;
 
 export const NameListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: 8px 0 0 8px;
+  margin: 8px 0 100px 8px;
 `;
 
 export const StyledNameTag = styled(NameTag)`

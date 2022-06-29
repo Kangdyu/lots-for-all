@@ -3,6 +3,7 @@ import useCanvas from "hooks/useCanvas";
 import { useRouter } from "next/router";
 import { HTMLAttributes, useState } from "react";
 import { Racing } from "./Racing";
+import { RankingListItem } from "./styles";
 
 export enum RacingGameStatus {
   "INGAME",
@@ -44,9 +45,9 @@ function RacingGame({ canvasWidth, canvasHeight, participants, ...props }: Props
         <Modal title="결과" show={true} onClose={() => router.push("/pick")}>
           <ul>
             {result.map((name, idx) => (
-              <li key={idx}>
+              <RankingListItem key={idx}>
                 {idx + 1}위: {name}
-              </li>
+              </RankingListItem>
             ))}
           </ul>
         </Modal>

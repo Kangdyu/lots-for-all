@@ -4,7 +4,7 @@ import { hexToRgba } from "utils/color";
 export const StyledModal = styled.div`
   max-width: 1100px;
   width: 500px;
-  height: 300px;
+  min-height: 300px;
   margin: 0 auto;
   padding: 24px;
   background-color: ${(props) => props.theme.color.white};
@@ -54,7 +54,7 @@ export const TitleAndQuitButton = styled.div`
 
 export const StyledModalContent = styled.div`
   margin: 24px 0;
-  height: 100%;
+  flex: 1;
 `;
 
 export const Dimmed = styled.div`

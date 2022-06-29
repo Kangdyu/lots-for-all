@@ -4,7 +4,7 @@ import useCanvas from "hooks/useCanvas";
 import { useRouter } from "next/router";
 import { HTMLAttributes, useMemo, useState } from "react";
 import { Roulette } from "./Roulette";
-import { RouletteGameContainer } from "./styles";
+import { ResultText, RouletteGameContainer } from "./styles";
 
 export enum RouletteGameStatus {
   "ROLLING",
@@ -56,7 +56,7 @@ function RouletteGame({ canvasWidth, canvasHeight, participants, ...props }: Pro
       )}
       {gameStatus === RouletteGameStatus.END && (
         <Modal title="추첨 결과" show={true} onClose={() => router.push("/pick")}>
-          {winner}
+          <ResultText>{winner}</ResultText>
         </Modal>
       )}
     </RouletteGameContainer>

@@ -4,7 +4,7 @@ const Layout = styled.main`
   max-width: 1140px;
   width: 100%;
   margin: 0 auto;
-  padding: 140px 20px 0;
+  padding: 140px 20px 60px;
 `;
 
 export default Layout;

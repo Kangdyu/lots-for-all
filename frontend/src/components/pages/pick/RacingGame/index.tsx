@@ -1,4 +1,6 @@
+import Modal from "components/common/Modal";
 import useCanvas from "hooks/useCanvas";
+import { useRouter } from "next/router";
 import { HTMLAttributes, useState } from "react";
 import { Racing } from "./Racing";
 
@@ -14,6 +16,8 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 }
 
 function RacingGame({ canvasWidth, canvasHeight, participants, ...props }: Props) {
+  const router = useRouter();
+
   const [gameStatus, setGameStatus] = useState<RacingGameStatus>(RacingGameStatus.INGAME);
   const [result, setResult] = useState<string[]>([]);
 
@@ -36,6 +40,17 @@ function RacingGame({ canvasWidth, canvasHeight, participants, ...props }: Props
   return (
     <div {...props}>
       <canvas ref={canvasRef}>Canvas를 지원하지 않는 브라우저입니다.</canvas>
+      {gameStatus === RacingGameStatus.END && (
+        <Modal title="결과" show={true} onClose={() => router.push("/pick")}>
+          <ul>
+            {result.map((name, idx) => (
+              <li key={idx}>
+                {idx + 1}위: {name}
+              </li>
+            ))}
+          </ul>
+        </Modal>
+      )}
     </div>
   );
 }

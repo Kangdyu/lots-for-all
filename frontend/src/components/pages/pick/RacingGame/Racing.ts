@@ -144,6 +144,10 @@ export class Racing {
           rank: player.rank,
         });
       });
+      if (this.ranking.length === this.players.length) {
+        this.setGameStatus(RacingGameStatus.END);
+        this.setResult(this.ranking);
+      }
     }
     this.drawStage(ctx);
   }

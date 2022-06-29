@@ -2,7 +2,8 @@ import Button from "components/common/Button";
 import SectionTitle from "components/common/SectionTitle";
 import { GameRoute } from "constants/games";
 import useClientRect from "hooks/useClientRect";
-import { FormEvent, HTMLAttributes, useCallback, useRef, useState } from "react";
+import { useRouter } from "next/router";
+import { FormEvent, HTMLAttributes, useCallback, useEffect, useRef, useState } from "react";
 import RacingGame from "../RacingGame";
 import RouletteGame from "../RouletteGame";
 import { Flex, NameListContainer, NameListForm, StyledInput, StyledNameTag } from "./styles";
@@ -17,7 +18,12 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 }
 
 function GameSecton({ game, ...props }: Props) {
+  const router = useRouter();
   const [inGame, setInGame] = useState(false);
+
+  useEffect(() => {
+    setInGame(false);
+  }, [router]);
 
   const [nameList, setNameList] = useState<NameListItem[]>([]);
 

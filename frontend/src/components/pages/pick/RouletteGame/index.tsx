@@ -18,7 +18,7 @@ function RouletteGame({ canvasWidth, canvasHeight, participants, ...props }: Pro
 
   const animate = (ctx: CanvasRenderingContext2D) => {
     fillBackground(ctx);
-    roulette.drawBoard(ctx);
+    roulette.draw(ctx);
   };
 
   const canvasRef = useCanvas(canvasWidth, canvasHeight, animate);

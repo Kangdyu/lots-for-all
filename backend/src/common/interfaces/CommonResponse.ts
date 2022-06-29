@@ -1,4 +1,4 @@
 export interface CommonResponse<T> {
-  result: T;
+  result?: T;
   message: string;
 }

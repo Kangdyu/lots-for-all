@@ -59,7 +59,7 @@ export const StyledModalContent = styled.div`
 
 export const Dimmed = styled.div`
   z-index: 50;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;

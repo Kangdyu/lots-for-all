@@ -1,4 +1,4 @@
-import { HTMLAttributes, MouseEventHandler, useEffect, useState } from "react";
+import { HTMLAttributes, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import Button from "../Button";
 import {
@@ -29,10 +29,20 @@ function Modal({
   ...props
 }: Props) {
   const [isBrowser, setIsBrowser] = useState(false);
+  const element = document.querySelector("body");
 
   useEffect(() => {
     setIsBrowser(true);
-  }, []);
+    if (element != null) {
+      element.style.overflow = "hidden";
+    }
+
+    return () => {
+      if (element != null) {
+        element.style.overflow = "visible";
+      }
+    };
+  }, [element]);
 
   const modalContent = show ? (
     <Dimmed

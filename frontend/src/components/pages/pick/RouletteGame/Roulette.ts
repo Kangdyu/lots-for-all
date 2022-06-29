@@ -15,6 +15,8 @@ export class Roulette {
   private velocity: number;
 
   private rotation: number;
+  public inGame: boolean;
+  private rolling: boolean;
 
   constructor(canvasWidth: number, canvasHeight: number, participants: string[]) {
     this.centerX = canvasWidth / 2;
@@ -26,6 +28,8 @@ export class Roulette {
     this.velocity = 0.2;
 
     this.rotation = 0;
+    this.inGame = true;
+    this.rolling = true;
   }
 
   getColor(i: number) {
@@ -85,8 +89,21 @@ export class Roulette {
     ctx.fill();
   }
 
+  stop() {
+    this.rolling = false;
+  }
+
   update(ctx: CanvasRenderingContext2D) {
-    this.rotation += this.velocity;
+    if (this.inGame) {
+      this.rotation += this.velocity;
+      if (!this.rolling) {
+        this.velocity -= 0.0003;
+      }
+
+      if (this.velocity <= 0) {
+        this.inGame = false;
+      }
+    }
     this.draw(ctx);
   }
 }

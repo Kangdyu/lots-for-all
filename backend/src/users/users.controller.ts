@@ -1,5 +1,6 @@
-import { Controller, Body, Param, Get, Post, Put, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Body, Param, Get, Post, Put, Delete, UseGuards, Req } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { Request } from 'express';
 import { CommonResponse } from 'src/common/interfaces/CommonResponse';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginDto } from './dto/login-dto';
@@ -24,6 +25,14 @@ export class UsersController {
   @Post('login')
   async login(@Body() loginDto: LoginDto): Promise<CommonResponse<{ token: string }>> {
     return await this.usersService.login(loginDto);
+  }
+
+  @ApiOperation({ summary: 'jwt 검증 및 유저 정보 반환' })
+  @ApiBearerAuth('access-token')
+  @UseGuards(JwtAuthGuard)
+  @Get('login')
+  logined(@Req() req: Request): Promise<CommonResponse<UserInfoDto>> {
+    return this.usersService.logined(req);
   }
 
   @ApiOperation({ summary: '유저 정보 조회' })

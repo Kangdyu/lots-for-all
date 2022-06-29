@@ -3,6 +3,7 @@ import SectionTitle from "components/common/SectionTitle";
 import { GameRoute } from "constants/games";
 import useClientRect from "hooks/useClientRect";
 import { FormEvent, HTMLAttributes, useCallback, useRef, useState } from "react";
+import RacingGame from "../RacingGame";
 import RouletteGame from "../RouletteGame";
 import { Flex, NameListContainer, NameListForm, StyledInput, StyledNameTag } from "./styles";
 
@@ -40,6 +41,26 @@ function GameSecton({ game, ...props }: Props) {
 
   const sectionRef = useRef<HTMLElement>(null);
   const { width } = useClientRect(sectionRef);
+
+  const GameComponent = () => {
+    if (game === "lottery") return <div>Lottery</div>;
+    else if (game === "roulette")
+      return (
+        <RouletteGame
+          canvasWidth={width}
+          canvasHeight={700}
+          participants={nameList.map((item) => item.name)}
+        />
+      );
+    else
+      return (
+        <RacingGame
+          canvasWidth={width}
+          canvasHeight={200 + nameList.length * 100}
+          participants={nameList.map((item) => item.name)}
+        />
+      );
+  };
 
   return (
     <section ref={sectionRef} {...props}>
@@ -90,13 +111,7 @@ function GameSecton({ game, ...props }: Props) {
           게임 시작
         </Button>
       </div>
-      {inGame && (
-        <RouletteGame
-          canvasWidth={width}
-          canvasHeight={700}
-          participants={nameList.map((item) => item.name)}
-        />
-      )}
+      {inGame && <GameComponent />}
     </section>
   );
 }

@@ -15,6 +15,7 @@ module.exports = {
   plugins: ["react", "@typescript-eslint"],
   rules: {
     "require-jsdoc": "off",
+    "react/display-name": "off",
     quotes: ["error", "double"], // 문자열 들을 쌍따옴표로 감싸도록 강제
   },
 };

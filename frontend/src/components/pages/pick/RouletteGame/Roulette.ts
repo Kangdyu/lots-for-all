@@ -14,6 +14,7 @@ export class Roulette {
   private colorPalette: string[];
   private velocity: number;
 
+  private winner: string;
   private rotation: number;
   public inGame: boolean;
   private rolling: boolean;
@@ -25,8 +26,9 @@ export class Roulette {
 
     this.radius = 280;
     this.colorPalette = ["#FD89AD", "#FEBB9E", "#FBFF96", "#B1FFA2", "#AFCEFF", "#B999FE"];
-    this.velocity = 0.2;
+    this.velocity = 0.1;
 
+    this.winner = "";
     this.rotation = 0;
     this.inGame = true;
     this.rolling = true;
@@ -40,15 +42,23 @@ export class Roulette {
 
   draw(ctx: CanvasRenderingContext2D) {
     const angle = (Math.PI * 2) / this.participants.length;
-    this.participants.map((participant, idx) =>
+    this.participants.forEach((participant, idx) => {
+      const rotation = this.rotation + angle * idx;
+      const target = Math.PI * 1.5;
+      const normalizedRotation = rotation % (Math.PI * 2);
+      if (normalizedRotation <= target && normalizedRotation + angle >= target) {
+        this.winner = participant;
+      }
+
       this.drawArc(ctx, {
         name: participant,
         color: this.getColor(idx),
-        rotation: this.rotation + angle * idx,
+        rotation,
         angle,
-      })
-    );
+      });
+    });
     this.drawBoard(ctx);
+    this.drawWinner(ctx);
   }
 
   drawArc(ctx: CanvasRenderingContext2D, options: DrawArcOption) {
@@ -87,6 +97,14 @@ export class Roulette {
     ctx.lineTo(this.centerX, 115);
     ctx.fillStyle = "black";
     ctx.fill();
+  }
+
+  drawWinner(ctx: CanvasRenderingContext2D) {
+    ctx.font = "30px GmarketSans";
+
+    ctx.beginPath();
+    ctx.textAlign = "center";
+    ctx.fillText(this.winner, this.centerX, 50);
   }
 
   stop() {

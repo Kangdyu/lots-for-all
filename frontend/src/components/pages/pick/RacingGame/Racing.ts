@@ -5,6 +5,14 @@ interface DrawHorseOption {
   name: string;
   x: number;
   y: number;
+  velocity: number;
+}
+
+interface Player {
+  name: string;
+  velocity: number;
+  x: number;
+  y: number;
 }
 
 export class Racing {
@@ -21,6 +29,7 @@ export class Racing {
   private imageHeight: number;
 
   private inGame: boolean;
+  private players: Player[];
 
   constructor(
     canvasWidth: number,
@@ -35,8 +44,6 @@ export class Racing {
     this.setGameStatus = setGameStatus;
     this.setResult = setResult;
 
-    this.inGame = false;
-
     this.horseImage = new Image();
     this.horseImage.src =
       "https://i.pinimg.com/originals/de/e3/58/dee3582eb486478b349ba3a56f4f2dd1.jpg";
@@ -45,6 +52,14 @@ export class Racing {
     this.originalImageHeight = 430;
     this.imageWidth = 60;
     this.imageHeight = 40;
+
+    this.inGame = false;
+    this.players = this.participants.map((participant, idx) => ({
+      name: participant,
+      velocity: Math.random() * 0.5,
+      x: 10,
+      y: 50 + (this.imageHeight + 30) * idx,
+    }));
   }
 
   drawStage(ctx: CanvasRenderingContext2D) {
@@ -72,13 +87,38 @@ export class Racing {
     ctx.textAlign = "center";
     ctx.fillStyle = "black";
     ctx.fillText(option.name, this.imageWidth / 2 + option.x, option.y - 10);
+
+    ctx.font = "8px GmarketSans";
+    ctx.fillText(option.velocity.toString(), this.imageWidth / 2 + option.x, option.y - 20);
+  }
+
+  getVelocityDeltaWithScore(currentVelocity: number) {
+    let delta;
+    if (currentVelocity > 1) {
+      delta = Math.random() * 0.01 - 0.02;
+    } else if (currentVelocity > 0.3) {
+      delta = Math.random() * 0.1 - 0.05;
+    } else {
+      delta = Math.random();
+    }
+
+    return delta;
   }
 
   update(ctx: CanvasRenderingContext2D) {
+    this.drawStage(ctx);
+
     if (this.inGame) {
-      this.drawStage(ctx);
-      this.participants.forEach((participant, idx) => {
-        this.drawHorse(ctx, { name: participant, x: 10, y: 50 + (this.imageHeight + 30) * idx });
+      this.players.forEach((player) => {
+        player.velocity += this.getVelocityDeltaWithScore(player.velocity);
+        player.x += player.velocity;
+        if (player.x <= 0) player.x = 0;
+        this.drawHorse(ctx, {
+          name: player.name,
+          x: player.x,
+          y: player.y,
+          velocity: player.velocity,
+        });
       });
     }
   }

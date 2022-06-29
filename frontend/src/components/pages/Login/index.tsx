@@ -1,26 +1,71 @@
 import { css } from "@emotion/react";
+import axios from "axios";
 import AuthFormContainer from "components/common/AuthFormContainer";
 import Button from "components/common/Button";
 import Link from "next/link";
+import { FormEvent, useRef } from "react";
+
 import { StyledA, StyledInput } from "./styles";
 
+// axios response interface(s)
+interface Result {
+  token: string;
+}
+
+interface Data {
+  message: string;
+  result: Result;
+}
+
+// axios request interface
+interface FormValue {
+  email: string;
+  password: string;
+}
+
 function Login() {
-  // TODO: loginRequest 만들기
+  const data: FormValue = { email: "", password: "" };
 
-  // function loginRequest() {
-  //   console.log("login Request Sent");
-  //   // 로그인 성공 시
-  //   // redirect to '/'
+  async function loginRequest(data: FormValue) {
+    // TODO: password frontend hashing
+    await axios
+      .post<Data>("/login", data)
+      .then((response) => {
+        console.log(response.data.result.token);
+        localStorage.setItem("token", response.data.result.token);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    return false;
+  }
 
-  //   // 로그인 실패 시
-  // }
+  const emailInputRef = useRef<HTMLInputElement>(null);
+  const passwordInputRef = useRef<HTMLInputElement>(null);
+  const handleListSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (emailInputRef.current) {
+      data.email = emailInputRef.current.value;
+      emailInputRef.current.value = "";
+    }
+
+    if (passwordInputRef.current) {
+      data.password = passwordInputRef.current.value;
+      passwordInputRef.current.value = "";
+    }
+
+    console.log(data);
+    loginRequest(data);
+  };
 
   return (
     <AuthFormContainer>
-      <form>
-        <StyledInput type="text" placeholder="이메일" />
-        <StyledInput type="password" placeholder="비밀번호" />
+      <form onSubmit={handleListSubmit}>
+        <StyledInput ref={emailInputRef} type="text" placeholder="이메일" />
+        <StyledInput ref={passwordInputRef} type="password" placeholder="비밀번호" />
         <Button
+          type="submit"
           css={css`
             margin-bottom: 10px;
             width: 100%;

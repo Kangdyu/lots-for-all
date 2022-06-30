@@ -10,6 +10,7 @@ export const theme: Theme = {
     primary900: "#5651C3",
     white: "#FFFFFF",
     black: "#333333",
+    red500: "FFC9C9",
     red700: "#FF7B7B",
     red900: "#FA6363",
   },

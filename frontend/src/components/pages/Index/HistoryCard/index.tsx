@@ -1,27 +1,46 @@
+import axios from "axios";
+import useGameHistories from "hooks/useGameHistory";
+import useUser from "hooks/useUser";
 import Image from "next/image";
 import Link from "next/link";
 
 import { HTMLAttributes, useEffect, useState } from "react";
 import { GameType } from "types/api";
 import playButton from "../../../../../public/images/playButton.svg";
+import transhCanIcon from "../../../../../public/images/trashCan.svg";
 
 import {
   StyledHistoryCard,
   StyledHistoryCardAction,
   StyledHistoryCardDate,
   StyledHistoryCardDetail,
+  StyledHistoryCardIcon,
   StyledHistoryCardInfo,
   StyledHistoryCardTitle,
 } from "./styles";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
+  gameHistoryId: number;
+  key: number;
   title: string;
   gameType: GameType;
   numPeople: number;
   date: Date;
   onClick: () => void;
 }
-function HistoryCard({ title, gameType, numPeople, date, onClick, ...props }: Props) {
+function HistoryCard({
+  gameHistoryId,
+  key,
+  title,
+  gameType,
+  numPeople,
+  date,
+  onClick,
+  ...props
+}: Props) {
+  const { user } = useUser();
+
+  const { mutate } = useGameHistories(user?.id);
   const [gameName, setGameName] = useState("");
   useEffect(() => {
     switch (gameType) {
@@ -43,6 +62,26 @@ function HistoryCard({ title, gameType, numPeople, date, onClick, ...props }: Pr
     }
   }, [gameType]);
 
+  async function deleteHistory() {
+    // TODO: password frontend hashing
+    const token = localStorage.getItem("token");
+
+    if (user) {
+      await axios
+        .delete("/users/" + user.id + "/histories/" + gameHistoryId + "?type=" + gameType, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          console.log(response.data.message);
+          mutate();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    return false;
+  }
+
   return (
     <StyledHistoryCard>
       <StyledHistoryCardInfo>
@@ -55,7 +94,16 @@ function HistoryCard({ title, gameType, numPeople, date, onClick, ...props }: Pr
         <StyledHistoryCardDate>{date.toString()}</StyledHistoryCardDate>
         <Link href="/">
           <a onClick={onClick}>
-            <Image width={40} height={40} src={playButton} alt="playButton" />
+            <StyledHistoryCardIcon>
+              <Image width={40} height={40} src={playButton} alt="playButton" />
+            </StyledHistoryCardIcon>
+          </a>
+        </Link>
+        <Link href="/">
+          <a onClick={deleteHistory}>
+            <StyledHistoryCardIcon>
+              <Image width={40} height={40} src={transhCanIcon} alt="trashCanIcon" />
+            </StyledHistoryCardIcon>
           </a>
         </Link>
       </StyledHistoryCardAction>

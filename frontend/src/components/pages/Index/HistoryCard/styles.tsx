@@ -51,3 +51,7 @@ export const StyledHistoryCardDate = styled.span`
   font-size: 14px;
   display: block;
 `;
+
+export const StyledHistoryCardIcon = styled.div`
+  margin: 0 5px;
+`;

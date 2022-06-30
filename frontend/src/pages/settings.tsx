@@ -49,7 +49,7 @@ const ButtonContainer = styled.div`
 const Name = styled.span`
   font-size: 24px;
   font-weight: 400;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 `;
 
 const Email = styled.span`

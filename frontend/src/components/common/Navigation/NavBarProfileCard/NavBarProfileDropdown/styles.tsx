@@ -7,7 +7,7 @@ export const StyledNavBarProfileDropdown = styled.div`
   top: 90px;
   right: 40px;
   width: 200px;
-  padding: 20px 10px;
+  padding: 0 10px;
   display: flex;
   background-color: ${(props) => props.theme.color.white};
   border-radius: 16px;
@@ -19,14 +19,8 @@ export const StyledNavBarProfileDropdown = styled.div`
 
 export const dropDownBaseStyle = css`
   font-size: 18px;
-  margin: 15px 0;
-  padding: 0 10px;
-  :first-child {
-    margin-top: 0;
-  }
-  :last-child {
-    margin-bottom: 0;
-  }
+  padding: 15px 10px;
+  cursor: pointer;
 `;
 
 export const StyledDropdownItem = styled.span`

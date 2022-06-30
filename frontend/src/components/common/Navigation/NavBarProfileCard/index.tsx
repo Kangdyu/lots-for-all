@@ -15,16 +15,15 @@ function NavBarProfileCard({ ...props }: Props) {
 
   return (
     <>
-      <StyledNavBarProfileCard {...props}>
+      <StyledNavBarProfileCard
+        onClick={() => {
+          setIsShown((prev: boolean) => !prev);
+        }}
+        {...props}
+      >
         <StyledProfilePicture />
         <StyledUserName>{user?.username}</StyledUserName>
-        <span
-          onClick={() => {
-            setIsShown((prev: boolean) => !prev);
-          }}
-        >
-          ∨
-        </span>
+        <span>∨</span>
       </StyledNavBarProfileCard>
       <NavBarProfileDropdown isShown={isShown} />
     </>

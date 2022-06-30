@@ -1,5 +1,6 @@
 import Button from "components/common/Button";
 import GameFormContainer, { GameFormValues } from "components/common/GameFormContainer";
+import Modal from "components/common/Modal";
 import { GameRoute } from "constants/games";
 import useClientRect from "hooks/useClientRect";
 import { useRouter } from "next/router";
@@ -21,8 +22,22 @@ function GameSecton({ game, ...props }: Props) {
 
   const gameFormRef = useRef<GameFormValues>(null);
 
+  const [showModal, setShowModal] = useState(false);
+  const [modalText, setModalText] = useState("");
+  const openModal = (modalText: string) => {
+    setModalText(modalText);
+    setShowModal(true);
+  };
   const startGame = useCallback(() => {
-    setInGame(true);
+    if (gameFormRef.current) {
+      if (gameFormRef.current.title === "") {
+        openModal("게임 제목을 입력해주세요.");
+      } else if (gameFormRef.current.participants.length < 2) {
+        openModal("두 명 이상의 인원이 필요합니다.");
+      } else {
+        setInGame(true);
+      }
+    }
   }, []);
 
   const sectionRef = useRef<HTMLElement>(null);
@@ -60,6 +75,9 @@ function GameSecton({ game, ...props }: Props) {
           게임 시작
         </Button>
       </div>
+      <Modal show={showModal} onClose={() => setShowModal(false)}>
+        {modalText}
+      </Modal>
       {inGame && <GameComponent />}
     </section>
   );

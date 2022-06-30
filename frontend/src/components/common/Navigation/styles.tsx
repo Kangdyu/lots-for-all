@@ -11,6 +11,8 @@ export const NavBar = styled.nav`
 
   background-color: ${(props) => props.theme.color.white};
   box-shadow: 0px 8px 24px 4px ${(props) => hexToRgba(props.theme.color.primary700, 0.1)};
+
+  z-index: 20;
 `;
 
 export const NavBarContainer = styled.div`

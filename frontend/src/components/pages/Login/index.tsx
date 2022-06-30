@@ -38,7 +38,6 @@ function Login() {
     await axios
       .post<Data>("/login", data)
       .then((response) => {
-        console.log(response.data.result.token);
         localStorage.setItem("token", response.data.result.token);
         mutate();
         router.push("/");
@@ -65,7 +64,6 @@ function Login() {
       passwordInputRef.current.value = "";
     }
 
-    console.log(data);
     loginRequest(data);
   };
 

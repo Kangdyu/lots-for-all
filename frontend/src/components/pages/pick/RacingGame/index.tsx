@@ -1,16 +1,14 @@
 import axios from "axios";
-import Button from "components/common/Button";
 import Modal from "components/common/Modal";
 import useCanvas from "hooks/useCanvas";
 import useUser from "hooks/useUser";
 import { useRouter } from "next/router";
-import { HTMLAttributes, useCallback, useMemo, useState } from "react";
-import { Roulette } from "./Roulette";
-import { ResultText, RouletteGameContainer } from "./styles";
+import { HTMLAttributes, useCallback, useState } from "react";
+import { Racing } from "./Racing";
+import { RankingListItem } from "./styles";
 
-export enum RouletteGameStatus {
-  "ROLLING",
-  "STOPPING",
+export enum RacingGameStatus {
+  "INGAME",
   "END",
 }
 
@@ -21,31 +19,26 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   participants: string[];
 }
 
-function RouletteGame({ gameTitle, canvasWidth, canvasHeight, participants, ...props }: Props) {
+function RacingGame({ gameTitle, canvasWidth, canvasHeight, participants, ...props }: Props) {
   const { user } = useUser();
 
   const router = useRouter();
 
-  const [gameStatus, setGameStatus] = useState<RouletteGameStatus>(RouletteGameStatus.ROLLING);
-  const [winner, setWinner] = useState("");
+  const [gameStatus, setGameStatus] = useState<RacingGameStatus>(RacingGameStatus.INGAME);
+  const [result, setResult] = useState<string[]>([]);
 
   // eslint-disable-next-line no-unused-vars
-  const [roulette, _] = useState(
-    new Roulette(canvasWidth, canvasHeight, participants, setGameStatus, setWinner)
+  const [racing, _] = useState(
+    new Racing(canvasWidth, canvasHeight, participants, setGameStatus, setResult)
   );
-
   const fillBackground = (ctx: CanvasRenderingContext2D) => {
-    ctx.fillStyle = "#F0F0FC";
+    ctx.fillStyle = "#FFFFFF";
     ctx.fillRect(0, 0, canvasWidth, canvasHeight);
   };
 
   const animate = (ctx: CanvasRenderingContext2D) => {
     fillBackground(ctx);
-    roulette.update(ctx);
-  };
-
-  const handleStopButtonClick = () => {
-    roulette.stop();
+    racing.update(ctx);
   };
 
   const canvasRef = useCanvas(canvasWidth, canvasHeight, animate);
@@ -58,11 +51,11 @@ function RouletteGame({ gameTitle, canvasWidth, canvasHeight, participants, ...p
         await axios.post(
           `/users/${user.id}/histories`,
           {
-            type: 3,
+            type: 4,
             title: gameTitle,
             number: participants.length,
             content: participants,
-            result: winner,
+            result,
           },
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -74,20 +67,21 @@ function RouletteGame({ gameTitle, canvasWidth, canvasHeight, participants, ...p
   }, []);
 
   return (
-    <RouletteGameContainer {...props}>
+    <div {...props}>
       <canvas ref={canvasRef}>Canvas를 지원하지 않는 브라우저입니다.</canvas>
-      {gameStatus === RouletteGameStatus.ROLLING && (
-        <Button onClick={handleStopButtonClick} variant="danger">
-          정지
-        </Button>
-      )}
-      {gameStatus === RouletteGameStatus.END && (
-        <Modal title="추첨 결과" show={true} onClose={handleModalButtonClick}>
-          <ResultText>{winner}</ResultText>
+      {gameStatus === RacingGameStatus.END && (
+        <Modal title="결과" show={true} onClose={handleModalButtonClick}>
+          <ul>
+            {result.map((name, idx) => (
+              <RankingListItem key={idx}>
+                {idx + 1}위: {name}
+              </RankingListItem>
+            ))}
+          </ul>
         </Modal>
       )}
-    </RouletteGameContainer>
+    </div>
   );
 }
 
-export default RouletteGame;
+export default RacingGame;

@@ -121,6 +121,7 @@ export class Roulette {
   }
 
   stop() {
+    this.setGameStatus(RouletteGameStatus.STOPPING);
     this.rolling = false;
   }
 

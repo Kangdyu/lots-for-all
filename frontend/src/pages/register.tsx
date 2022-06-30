@@ -1,4 +1,3 @@
-import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import Logo from "components/common/Logo";
 import Register from "components/pages/Register";

@@ -33,10 +33,12 @@ export const NavBarLogo = styled.a`
   color: ${(props) => props.theme.color.black};
 `;
 
-export const NavBarContent = styled.a<{ selected: boolean }>`
+export const NavBarContent = styled.a<{ selected: boolean; disabled?: boolean }>`
   font-size: 18px;
   font-weight: ${(props) => props.selected && "400"};
-  color: ${({ theme, selected }) => (selected ? theme.color.primary700 : theme.color.black)};
+  color: ${({ theme, selected, disabled }) =>
+    disabled ? "#ccc" : selected ? theme.color.primary700 : theme.color.black};
+  pointer-events: ${({ disabled }) => disabled && "none"};
 
   &:not(:last-child) {
     margin-right: 70px;

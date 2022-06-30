@@ -1,4 +1,4 @@
-import { HTMLAttributes, MouseEventHandler, useEffect, useState } from "react";
+import { HTMLAttributes, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import Button from "../Button";
 import {
@@ -16,6 +16,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   buttonText?: string;
   show: boolean;
   onClose: () => void;
+  showButton?: boolean;
   onButtonClick?: () => void;
 }
 
@@ -25,6 +26,7 @@ function Modal({
   buttonText = "확인",
   show,
   onClose,
+  showButton = true,
   onButtonClick = onClose,
   ...props
 }: Props) {
@@ -32,6 +34,18 @@ function Modal({
 
   useEffect(() => {
     setIsBrowser(true);
+    const element = document.querySelector("body");
+    if (show) {
+      if (element != null) {
+        element.style.overflow = "hidden";
+      }
+    }
+
+    return () => {
+      if (element != null) {
+        element.style.overflow = "visible";
+      }
+    };
   }, []);
 
   const modalContent = show ? (
@@ -47,9 +61,11 @@ function Modal({
           <StyledModalQuitButton onClick={onClose}>×</StyledModalQuitButton>
         </TitleAndQuitButton>
         <StyledModalContent>{children}</StyledModalContent>
-        <StyledModalButton>
-          <Button onClick={onButtonClick}>{buttonText}</Button>
-        </StyledModalButton>
+        {showButton && (
+          <StyledModalButton>
+            <Button onClick={onButtonClick}>{buttonText}</Button>
+          </StyledModalButton>
+        )}
       </StyledModal>
     </Dimmed>
   ) : null;

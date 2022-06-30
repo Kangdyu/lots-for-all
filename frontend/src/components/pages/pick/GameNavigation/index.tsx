@@ -13,7 +13,9 @@ function GameNavigation({ ...props }: Props) {
     <GameNavBar {...props}>
       {GAME_ROUTES.map((route) => (
         <Link key={route.path} href={route.path} passHref>
-          <GameNavigationAnchor selected={asPath === route.path}>{route.name}</GameNavigationAnchor>
+          <GameNavigationAnchor selected={asPath === route.path} disabled={route.disable}>
+            {route.name}
+          </GameNavigationAnchor>
         </Link>
       ))}
     </GameNavBar>

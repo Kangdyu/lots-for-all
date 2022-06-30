@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import Input from "components/common/Input";
-import NameTag from "../NameTag";
+import NameTag from "./NameTag";
 
 export const Flex = styled.div`
   display: flex;
@@ -21,9 +21,13 @@ export const NameListForm = styled.form`
 `;
 
 export const NameListContainer = styled.div`
+  margin-bottom: 100px;
+`;
+
+export const NameList = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: 8px 0 100px 8px;
+  margin: 8px 0 16px 8px;
 `;
 
 export const StyledNameTag = styled(NameTag)`

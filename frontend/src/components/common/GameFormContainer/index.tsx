@@ -21,7 +21,7 @@ import {
   StyledNameTag,
 } from "./styles";
 
-interface NameListItem {
+export interface NameListItem {
   id: string;
   name: string;
 }
@@ -124,6 +124,7 @@ const GameFormContainer = forwardRef((props: Props, ref: Ref<GameFormValues>) =>
           addNamesFromNameList();
           setShowNameListModal(false);
         }}
+        setGroup={setNameList}
       />
     </>
   );

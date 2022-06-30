@@ -5,7 +5,7 @@ import useUser from "hooks/useUser";
 import { useRouter } from "next/router";
 import { HTMLAttributes, useCallback, useState } from "react";
 import { Racing } from "./Racing";
-import { RankingListItem } from "./styles";
+import { Container, RankingListItem } from "./styles";
 
 export enum RacingGameStatus {
   "INGAME",
@@ -64,10 +64,10 @@ function RacingGame({ gameTitle, canvasWidth, canvasHeight, participants, ...pro
       }
     }
     router.push("/pick");
-  }, []);
+  }, [result]);
 
   return (
-    <div {...props}>
+    <Container {...props}>
       <canvas ref={canvasRef}>Canvas를 지원하지 않는 브라우저입니다.</canvas>
       {gameStatus === RacingGameStatus.END && (
         <Modal title="결과" show={true} onClose={handleModalButtonClick}>
@@ -80,7 +80,7 @@ function RacingGame({ gameTitle, canvasWidth, canvasHeight, participants, ...pro
           </ul>
         </Modal>
       )}
-    </div>
+    </Container>
   );
 }
 

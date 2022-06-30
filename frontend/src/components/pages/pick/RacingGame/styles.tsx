@@ -1,4 +1,11 @@
 import styled from "@emotion/styled";
+import { hexToRgba } from "utils/color";
+
+export const Container = styled.div`
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px 0 ${(props) => hexToRgba(props.theme.color.primary700, 0.1)};
+`;
 
 export const RankingListItem = styled.li`
   &:nth-of-type(1) {

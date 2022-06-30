@@ -47,6 +47,8 @@ const GAME_TYPES = [
   },
 ];
 
+const DEFAULT_GAME_TITLE = "새로운 추첨";
+
 interface Props extends HTMLAttributes<HTMLDivElement> {}
 
 const GameFormContainer = forwardRef((props: Props, ref: Ref<GameFormValues>) => {
@@ -64,7 +66,7 @@ const GameFormContainer = forwardRef((props: Props, ref: Ref<GameFormValues>) =>
     }
   }, [query]);
 
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(DEFAULT_GAME_TITLE);
   const [nameList, setNameList] = useState<NameListItem[]>([]);
 
   const titleInputRef = useRef<HTMLInputElement>(null);
@@ -116,6 +118,7 @@ const GameFormContainer = forwardRef((props: Props, ref: Ref<GameFormValues>) =>
             label="제목"
             placeholder="게임 제목 입력"
             onChange={(e) => setTitle(e.target.value)}
+            defaultValue={DEFAULT_GAME_TITLE}
             ref={titleInputRef}
           />
           <StyledInput

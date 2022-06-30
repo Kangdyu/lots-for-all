@@ -87,7 +87,6 @@ function HistoryCard({
     }
     return false;
   }
-  console.log("WINNER: ", winner);
   return (
     <>
       <Modal
@@ -99,15 +98,17 @@ function HistoryCard({
         showButton={false}
       >
         <StyledHistoryDetailContent>
-          <Span>플레이 날짜: {date.toString()}</Span>
-          <Span>참가 인원 수: {numPeople} 명</Span>
-          <Span>참가 인원</Span>
+          <Span css={{ fontWeight: 400 }}>플레이 날짜</Span>
+          <Span>{date.toString()}</Span>
+          <Span css={{ fontWeight: 400 }}>참가 인원 수</Span>
+          <Span>{numPeople} 명</Span>
+          <Span css={{ fontWeight: 400 }}>참가 인원</Span>
           <StyledNameContent>
             {people?.map((person: string, i) => (
               <Span key={i}>{person}</Span>
             ))}
           </StyledNameContent>
-          <Span>우승 인원</Span>
+          <Span css={{ fontWeight: 400 }}>우승 인원</Span>
           <StyledNameContent>
             {typeof winner === "string" ? (
               <Span>{winner}</Span>

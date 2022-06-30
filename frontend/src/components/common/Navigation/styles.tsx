@@ -16,6 +16,8 @@ export const NavBar = styled.nav`
 `;
 
 export const NavBarContainer = styled.div`
+  position: relative;
+
   max-width: 1280px;
   width: 100%;
   height: 100%;

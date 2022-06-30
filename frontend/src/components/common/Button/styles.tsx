@@ -11,6 +11,15 @@ export const buttonBaseStyle = css`
   font: inherit;
   font-weight: 400;
   font-size: 16px;
+
+  &:disabled {
+    cursor: not-allowed;
+
+    background-color: #aaa;
+    &:hover {
+      background-color: #aaa;
+    }
+  }
 `;
 
 export const primaryButtonStyle = css`

@@ -1,3 +1,4 @@
+import useUser from "hooks/useUser";
 import Link from "next/link";
 import { HTMLAttributes } from "react";
 
@@ -14,6 +15,8 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 }
 
 function NavBarProfileDropdown({ isShown, ...props }: Props) {
+  const { mutate } = useUser();
+
   if (isShown) {
     return (
       <StyledNavBarProfileDropdown {...props}>
@@ -22,7 +25,14 @@ function NavBarProfileDropdown({ isShown, ...props }: Props) {
         </Link>
 
         <StyledDropdownSeparator />
-        <StyledDropdownDangerItem onClick={logout}>로그아웃</StyledDropdownDangerItem>
+        <StyledDropdownDangerItem
+          onClick={() => {
+            logout();
+            mutate();
+          }}
+        >
+          로그아웃
+        </StyledDropdownDangerItem>
       </StyledNavBarProfileDropdown>
     );
   } else {

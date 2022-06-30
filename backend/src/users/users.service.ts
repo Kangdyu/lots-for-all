@@ -52,12 +52,12 @@ export class UsersService {
     });
   }
 
-  private async createUserEntityByDto(dto: CreateUserDto): Promise<User> {
+  private async createUserEntityByDto(dto: CreateUserDto, randomProfile: boolean): Promise<User> {
     const user: User = new User();
     user.username = dto.username;
     user.email = dto.email;
     user.password = await bcrypt.hash(dto.password, this.SALT_OR_ROUNDS);
-    user.imageNo = 0;
+    user.imageNo = randomProfile ? Math.floor(Math.random() * 10) : dto.imageNo;
 
     return user;
   }
@@ -102,7 +102,7 @@ export class UsersService {
     }
 
     const createdUser: User = await this.usersRepository.save(
-      await this.createUserEntityByDto(createUserDto)
+      await this.createUserEntityByDto(createUserDto, true)
     );
 
     return {
@@ -118,7 +118,7 @@ export class UsersService {
       {
         id: user_id,
       },
-      await this.createUserEntityByDto(createUserDto)
+      await this.createUserEntityByDto(createUserDto, false)
     );
     return {
       message: 'success',

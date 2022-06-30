@@ -1,16 +1,20 @@
 import useUser from "hooks/useUser";
+import { useRouter } from "next/router";
 import {
   FormEvent,
   forwardRef,
   HTMLAttributes,
   Ref,
   useCallback,
+  useEffect,
   useImperativeHandle,
   useRef,
   useState,
 } from "react";
+import { GameType } from "types/api";
 import Button from "../Button";
 import SectionTitle from "../SectionTitle";
+import HistoryModal from "./HistoryModal";
 import NameListModal from "./NameListModal";
 import SaveGroupModal from "./SaveGroupModal";
 import {
@@ -32,14 +36,38 @@ export interface GameFormValues {
   participants: string[];
 }
 
+const GAME_TYPES = [
+  {
+    name: "roulette",
+    type: GameType.Roulette,
+  },
+  {
+    name: "racing",
+    type: GameType.Racing,
+  },
+];
+
 interface Props extends HTMLAttributes<HTMLDivElement> {}
 
 const GameFormContainer = forwardRef((props: Props, ref: Ref<GameFormValues>) => {
   const { loggedOut } = useUser();
 
+  const { query } = useRouter();
+
+  useEffect(() => {
+    const title = query.title;
+    const group = query.group;
+    if (title && typeof title === "string" && group && typeof group === "string") {
+      setTitle(title);
+      if (titleInputRef.current) titleInputRef.current.value = title;
+      setNameList(group.split(",").map((member, idx) => ({ id: idx.toString(), name: member })));
+    }
+  }, [query]);
+
   const [title, setTitle] = useState("");
   const [nameList, setNameList] = useState<NameListItem[]>([]);
 
+  const titleInputRef = useRef<HTMLInputElement>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
 
   const handleListSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
@@ -63,6 +91,11 @@ const GameFormContainer = forwardRef((props: Props, ref: Ref<GameFormValues>) =>
     setShowSaveGroupModal(true);
   }, []);
 
+  const [showHistoryModal, setShowHistoryModal] = useState(false);
+  const handleHistoryButtonClick = useCallback(() => {
+    setShowHistoryModal(true);
+  }, []);
+
   useImperativeHandle(ref, () => ({
     title,
     participants: nameList.map((item) => item.name),
@@ -73,10 +106,7 @@ const GameFormContainer = forwardRef((props: Props, ref: Ref<GameFormValues>) =>
       <Flex css={{ justifyContent: "space-between", marginBottom: "24px" }} {...props}>
         <SectionTitle>기본 설정</SectionTitle>
         {!loggedOut && (
-          <Flex>
-            <Button css={{ marginRight: "8px" }}>프리셋</Button>
-            <Button>최근 플레이</Button>
-          </Flex>
+          <Button onClick={handleHistoryButtonClick}>최근 플레이한 세팅 불러오기</Button>
         )}
       </Flex>
       <Flex css={{ justifyContent: "space-between", marginBottom: "40px" }}>
@@ -86,6 +116,7 @@ const GameFormContainer = forwardRef((props: Props, ref: Ref<GameFormValues>) =>
             label="제목"
             placeholder="게임 제목 입력"
             onChange={(e) => setTitle(e.target.value)}
+            ref={titleInputRef}
           />
           <StyledInput
             type="text"
@@ -141,6 +172,14 @@ const GameFormContainer = forwardRef((props: Props, ref: Ref<GameFormValues>) =>
         show={showSaveGroupModal}
         onClose={() => setShowSaveGroupModal(false)}
         members={nameList.map((member) => member.name)}
+      />
+
+      <HistoryModal
+        show={showHistoryModal}
+        onClose={() => setShowHistoryModal(false)}
+        gameType={GAME_TYPES.find((game) => game.name === query?.game)!.type}
+        titleInputRef={titleInputRef}
+        setGroup={setNameList}
       />
     </>
   );

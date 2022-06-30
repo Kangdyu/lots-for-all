@@ -4,6 +4,7 @@ import AuthFormContainer from "components/common/AuthFormContainer";
 import Button from "components/common/Button";
 import Modal from "components/common/Modal";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { FormEvent, useRef, useState } from "react";
 import { StyledA, StyledInput } from "./styles";
 
@@ -31,6 +32,8 @@ function Register() {
   const [currentTitle, setCurrentTitle] = useState("");
   const [currentProblem, setCurrentProblem] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [isRegisterSuccess, setIsRegisterSuccess] = useState(false);
+  const router = useRouter();
 
   const data: FormValue = { username: "", email: "", password: "" };
 
@@ -39,6 +42,7 @@ function Register() {
       .post<Data>("/signup", data)
       .then((response) => {
         console.log(response.data.message);
+        setIsRegisterSuccess(true);
         openModal({ messageString: "회원가입 성공! " });
       })
       .catch((error) => {
@@ -160,7 +164,12 @@ function Register() {
         title={currentTitle}
         buttonText="확인"
         show={showModal}
-        onClose={() => setShowModal(false)}
+        onClose={() => {
+          setShowModal(false);
+          if (isRegisterSuccess) {
+            router.push("/login");
+          }
+        }}
       >
         {currentProblem}
       </Modal>

@@ -64,7 +64,7 @@ function RacingGame({ gameTitle, canvasWidth, canvasHeight, participants, ...pro
       }
     }
     router.push("/pick");
-  }, []);
+  }, [result]);
 
   return (
     <div {...props}>

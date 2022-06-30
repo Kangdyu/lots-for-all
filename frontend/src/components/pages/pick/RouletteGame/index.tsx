@@ -33,6 +33,7 @@ function RouletteGame({ gameTitle, canvasWidth, canvasHeight, participants, ...p
   const [roulette, _] = useState(
     new Roulette(canvasWidth, canvasHeight, participants, setGameStatus, setWinner)
   );
+  console.log(winner);
 
   const fillBackground = (ctx: CanvasRenderingContext2D) => {
     ctx.fillStyle = "#F0F0FC";
@@ -71,7 +72,7 @@ function RouletteGame({ gameTitle, canvasWidth, canvasHeight, participants, ...p
       }
     }
     router.push("/pick");
-  }, []);
+  }, [winner]);
 
   return (
     <RouletteGameContainer {...props}>

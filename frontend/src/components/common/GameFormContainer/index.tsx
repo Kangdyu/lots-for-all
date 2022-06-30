@@ -1,10 +1,12 @@
 import useUser from "hooks/useUser";
+import { useRouter } from "next/router";
 import {
   FormEvent,
   forwardRef,
   HTMLAttributes,
   Ref,
   useCallback,
+  useEffect,
   useImperativeHandle,
   useRef,
   useState,
@@ -37,9 +39,22 @@ interface Props extends HTMLAttributes<HTMLDivElement> {}
 const GameFormContainer = forwardRef((props: Props, ref: Ref<GameFormValues>) => {
   const { loggedOut } = useUser();
 
+  const { query } = useRouter();
+
+  useEffect(() => {
+    const title = query.title;
+    const group = query.group;
+    if (title && typeof title === "string" && group && typeof group === "string") {
+      setTitle(title);
+      if (titleInputRef.current) titleInputRef.current.value = title;
+      setNameList(group.split(",").map((member, idx) => ({ id: idx.toString(), name: member })));
+    }
+  }, [query]);
+
   const [title, setTitle] = useState("");
   const [nameList, setNameList] = useState<NameListItem[]>([]);
 
+  const titleInputRef = useRef<HTMLInputElement>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
 
   const handleListSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
@@ -86,6 +101,7 @@ const GameFormContainer = forwardRef((props: Props, ref: Ref<GameFormValues>) =>
             label="제목"
             placeholder="게임 제목 입력"
             onChange={(e) => setTitle(e.target.value)}
+            ref={titleInputRef}
           />
           <StyledInput
             type="text"

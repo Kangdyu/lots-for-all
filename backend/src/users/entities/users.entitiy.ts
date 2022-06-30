@@ -23,8 +23,8 @@ export class User {
   @Column({ type: 'varchar', length: '255', nullable: false })
   password: string;
 
-  @Column({ type: 'varchar', length: '255', nullable: true })
-  imageUrl: string;
+  @Column({ type: 'int', nullable: false, default: 0 })
+  imageNo: number;
 
   @OneToMany(() => Group, (group) => group.user)
   groups: Group[];

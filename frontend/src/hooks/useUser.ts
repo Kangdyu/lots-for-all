@@ -4,7 +4,7 @@ import { userFetcher } from "utils/fetcher";
 function useUser() {
   const { data, mutate, error } = useSWR("user", userFetcher);
 
-  const loggedOut = error && error.status === 401;
+  const loggedOut: boolean = error && error.status === 401;
 
   return {
     loggedOut,

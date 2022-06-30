@@ -7,7 +7,7 @@ import { DeleteButton, GroupCard, GroupMember, GroupMemberContainer, GroupName }
 
 function GroupSection() {
   const { user } = useUser();
-  const { groups, mutate } = useGroups(user?.id);
+  const { groups, error, mutate } = useGroups(user?.id);
 
   const handleDeleteButtonClick = useCallback(
     async (groupId: number) => {
@@ -30,17 +30,23 @@ function GroupSection() {
   return (
     <section>
       <SectionTitle css={{ marginBottom: "24px" }}>명단 관리</SectionTitle>
-      {groups?.map((group) => (
-        <GroupCard key={group.id}>
-          <GroupName>{group.title}</GroupName>
-          <GroupMemberContainer>
-            {group.members.map((member, idx) => (
-              <GroupMember key={idx}>{member}</GroupMember>
-            ))}
-          </GroupMemberContainer>
-          <DeleteButton onClick={() => handleDeleteButtonClick(group.id)}>×</DeleteButton>
-        </GroupCard>
-      ))}
+      {!groups && !error ? (
+        <div>Loading...</div>
+      ) : groups?.length === 0 ? (
+        <div>명단이 없습니다.</div>
+      ) : (
+        groups?.map((group) => (
+          <GroupCard key={group.id}>
+            <GroupName>{group.title}</GroupName>
+            <GroupMemberContainer>
+              {group.members.map((member, idx) => (
+                <GroupMember key={idx}>{member}</GroupMember>
+              ))}
+            </GroupMemberContainer>
+            <DeleteButton onClick={() => handleDeleteButtonClick(group.id)}>×</DeleteButton>
+          </GroupCard>
+        ))
+      )}
     </section>
   );
 }

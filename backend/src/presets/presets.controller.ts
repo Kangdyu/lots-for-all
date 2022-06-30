@@ -117,7 +117,7 @@ export class PresetsController {
   async deletePreset(
     @Req() req: Request,
     @Param() param: { user_id: number; preset_id: number },
-    @Query() query: { type?: number }
+    @Query() query: { type: number }
   ): Promise<CommonResponse<null>> {
     await this.usersService.checkUserAuthByJWT(req, param.user_id);
     return await this.presetsService.delete(param.user_id, param.preset_id, query.type);

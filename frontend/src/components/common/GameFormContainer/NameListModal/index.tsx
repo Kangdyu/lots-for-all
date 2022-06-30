@@ -33,17 +33,19 @@ function NameListModal({ show, onClose, onButtonClick, setGroup }: Props) {
       showButton={false}
       onButtonClick={onButtonClick}
     >
-      {groups?.map((group) => (
-        <GroupButton
-          key={group.id}
-          onClick={() => {
-            handleGroupButtonClick(group);
-            onClose();
-          }}
-        >
-          {group.title}
-        </GroupButton>
-      ))}
+      {groups?.length === 0
+        ? "명단이 없습니다."
+        : groups?.map((group) => (
+            <GroupButton
+              key={group.id}
+              onClick={() => {
+                handleGroupButtonClick(group);
+                onClose();
+              }}
+            >
+              {group.title}
+            </GroupButton>
+          ))}
     </Modal>
   );
 }

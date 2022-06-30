@@ -21,7 +21,6 @@ import {
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   gameHistoryId: number;
-  key: number;
   title: string;
   gameType: GameType;
   numPeople: number;
@@ -30,7 +29,6 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 }
 function HistoryCard({
   gameHistoryId,
-  key,
   title,
   gameType,
   numPeople,

@@ -51,7 +51,7 @@ function IndexPage() {
       {histories?.map((gameHistory: GameHistory) => (
         <HistoryCard
           gameHistoryId={gameHistory.id}
-          key={gameHistory.id}
+          key={`${gameHistory.type}/${gameHistory.id}`}
           title={gameHistory.title}
           gameType={gameHistory.type}
           numPeople={gameHistory.number}

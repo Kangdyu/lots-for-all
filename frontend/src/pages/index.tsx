@@ -48,29 +48,32 @@ function IndexPage() {
           <NewGameAnchor>게임 시작하기 &gt;</NewGameAnchor>
         </Link>
         {!loggedOut && (
-          <SectionTitle css={{ marginBottom: "24px" }}>최근 플레이한 게임</SectionTitle>
+          <>
+            <SectionTitle css={{ marginBottom: "24px" }}>최근 플레이한 게임</SectionTitle>
+
+            {histories?.map((gameHistory: GameHistory) => (
+              <HistoryCard
+                gameHistoryId={gameHistory.id}
+                key={`${gameHistory.type}/${gameHistory.id}`}
+                title={gameHistory.title}
+                gameType={gameHistory.type}
+                numPeople={gameHistory.number}
+                date={gameHistory.createdAt}
+                onClick={() => {
+                  router.push(
+                    "/pick/" +
+                      gameNames[gameHistory.type] +
+                      "?title=" +
+                      gameHistory.title +
+                      "&group=" +
+                      gameHistory.content,
+                    "/pick/" + gameNames[gameHistory.type]
+                  );
+                }}
+              />
+            ))}
+          </>
         )}
-        {histories?.map((gameHistory: GameHistory) => (
-          <HistoryCard
-            gameHistoryId={gameHistory.id}
-            key={`${gameHistory.type}/${gameHistory.id}`}
-            title={gameHistory.title}
-            gameType={gameHistory.type}
-            numPeople={gameHistory.number}
-            date={gameHistory.createdAt}
-            onClick={() => {
-              router.push(
-                "/pick/" +
-                  gameNames[gameHistory.type] +
-                  "?title=" +
-                  gameHistory.title +
-                  "&group=" +
-                  gameHistory.content,
-                "/pick/" + gameNames[gameHistory.type]
-              );
-            }}
-          />
-        ))}
       </Layout>
     </>
   );

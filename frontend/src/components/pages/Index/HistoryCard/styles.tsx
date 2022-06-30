@@ -55,3 +55,21 @@ export const StyledHistoryCardDate = styled.span`
 export const StyledHistoryCardIcon = styled.div`
   margin: 0 5px;
 `;
+
+export const StyledHistoryDetailContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: left;
+`;
+
+export const Span = styled.span`
+  font-size: 14px;
+  display: block;
+  margin: 10px 0;
+  margin-right: 10px;
+`;
+
+export const StyledNameContent = styled.div`
+  display: flex;
+`;

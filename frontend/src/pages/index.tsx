@@ -61,6 +61,8 @@ function IndexPage() {
                     gameType={gameHistory.type}
                     numPeople={gameHistory.number}
                     date={gameHistory.createdAt}
+                    people={gameHistory.content}
+                    winner={gameHistory.result}
                     onClick={() => {
                       router.push(
                         "/pick/" +

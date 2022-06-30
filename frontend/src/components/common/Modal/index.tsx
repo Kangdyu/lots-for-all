@@ -29,10 +29,10 @@ function Modal({
   ...props
 }: Props) {
   const [isBrowser, setIsBrowser] = useState(false);
-  const element = document.querySelector("body");
 
   useEffect(() => {
     setIsBrowser(true);
+    const element = document.querySelector("body");
     if (element != null) {
       element.style.overflow = "hidden";
     }
@@ -42,7 +42,7 @@ function Modal({
         element.style.overflow = "visible";
       }
     };
-  }, [element]);
+  }, []);
 
   const modalContent = show ? (
     <Dimmed

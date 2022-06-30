@@ -156,7 +156,11 @@ const GameFormContainer = forwardRef((props: Props, ref: Ref<GameFormValues>) =>
           <br />
         </NameList>
         {!loggedOut && (
-          <Button css={{ display: "block", margin: "0 auto" }} onClick={handleSaveGroupButtonClick}>
+          <Button
+            css={{ display: "block", margin: "0 auto" }}
+            onClick={handleSaveGroupButtonClick}
+            disabled={nameList.length === 0}
+          >
             명단 저장
           </Button>
         )}

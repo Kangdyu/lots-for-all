@@ -28,7 +28,7 @@ export interface NameListItem {
 }
 
 export interface GameFormValues {
-  title?: string;
+  title: string;
   participants: string[];
 }
 
@@ -37,9 +37,9 @@ interface Props extends HTMLAttributes<HTMLDivElement> {}
 const GameFormContainer = forwardRef((props: Props, ref: Ref<GameFormValues>) => {
   const { loggedOut } = useUser();
 
+  const [title, setTitle] = useState("");
   const [nameList, setNameList] = useState<NameListItem[]>([]);
 
-  const titleInputRef = useRef<HTMLInputElement>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
 
   const handleListSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
@@ -64,7 +64,7 @@ const GameFormContainer = forwardRef((props: Props, ref: Ref<GameFormValues>) =>
   }, []);
 
   useImperativeHandle(ref, () => ({
-    title: titleInputRef.current?.value,
+    title,
     participants: nameList.map((item) => item.name),
   }));
 
@@ -81,7 +81,12 @@ const GameFormContainer = forwardRef((props: Props, ref: Ref<GameFormValues>) =>
       </Flex>
       <Flex css={{ justifyContent: "space-between", marginBottom: "40px" }}>
         <NameListForm onSubmit={handleListSubmit}>
-          <StyledInput type="text" label="제목" placeholder="게임 제목 입력" ref={titleInputRef} />
+          <StyledInput
+            type="text"
+            label="제목"
+            placeholder="게임 제목 입력"
+            onChange={(e) => setTitle(e.target.value)}
+          />
           <StyledInput
             type="text"
             label="인원 / 항목"

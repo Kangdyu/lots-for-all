@@ -1,8 +1,6 @@
 import Layout from "components/common/Layout";
 
 import Navigation from "components/common/Navigation";
-import { useState } from "react";
-import { MenuBarContext } from "shared/MenuBarContext";
 
 function IndexPage() {
   // login 여부 체크

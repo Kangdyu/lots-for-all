@@ -2,7 +2,7 @@ import axios from "axios";
 import Input from "components/common/Input";
 import Modal from "components/common/Modal";
 import useUser from "hooks/useUser";
-import { ComponentProps, FormEvent, useCallback, useRef } from "react";
+import { ComponentProps, FormEvent, useCallback, useEffect, useRef } from "react";
 import { useSWRConfig } from "swr";
 
 interface Props extends ComponentProps<typeof Modal> {
@@ -14,6 +14,12 @@ function SaveGroupModal({ show, onClose, members }: Props) {
   const { mutate } = useSWRConfig();
 
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (show && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [show]);
 
   const handleSubmit = useCallback(
     (e?: FormEvent<HTMLFormElement>) => {

@@ -50,7 +50,7 @@ function IndexPage() {
       <Layout>모두의 추첨</Layout>
       {histories?.map((gameHistory: GameHistory) => (
         <HistoryCard
-          key={gameHistory.id}
+          key={`${gameHistory.type}/${gameHistory.id}`}
           title={gameHistory.title}
           gameType={gameHistory.type}
           numPeople={gameHistory.number}

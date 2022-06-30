@@ -81,7 +81,8 @@ function SettingsPage() {
               <Email>{user?.email}</Email>
             </InfoContainer>
             <ButtonContainer>
-              <Button>비밀번호 변경</Button>
+              {/* <Button>비밀번호 변경</Button> */}
+              <div></div>
               <Button
                 variant="danger"
                 onClick={() => {

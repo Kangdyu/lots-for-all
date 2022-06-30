@@ -21,6 +21,7 @@ function SaveGroupModal({ show, onClose, members }: Props) {
 
       async function submitGroup() {
         if (!inputRef.current) return;
+        if (inputRef.current.value === "") return;
         if (!user) return;
 
         const token = localStorage.getItem("token");

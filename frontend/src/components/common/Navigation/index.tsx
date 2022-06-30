@@ -35,7 +35,9 @@ function Navigation({ ...props }: Props) {
         <div>
           {loggedOut ? (
             <Link href="/login">
-              <Button>로그인</Button>
+              <a>
+                <Button>로그인</Button>
+              </a>
             </Link>
           ) : (
             <NavBarProfileCard />

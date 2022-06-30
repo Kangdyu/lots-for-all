@@ -85,7 +85,7 @@ export class HistoriesController {
   async deleteHistory(
     @Req() req: Request,
     @Param() param: { user_id: number; history_id: number },
-    @Query() query: { type?: number }
+    @Query() query: { type: number }
   ): Promise<CommonResponse<null>> {
     await this.usersService.checkUserAuthByJWT(req, param.user_id);
     return await this.historiesService.delete(param.user_id, param.history_id, query.type);

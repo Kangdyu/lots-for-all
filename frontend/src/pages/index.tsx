@@ -51,27 +51,29 @@ function IndexPage() {
           <>
             <SectionTitle css={{ marginBottom: "24px" }}>최근 플레이한 게임</SectionTitle>
 
-            {histories?.map((gameHistory: GameHistory) => (
-              <HistoryCard
-                gameHistoryId={gameHistory.id}
-                key={`${gameHistory.type}/${gameHistory.id}`}
-                title={gameHistory.title}
-                gameType={gameHistory.type}
-                numPeople={gameHistory.number}
-                date={gameHistory.createdAt}
-                onClick={() => {
-                  router.push(
-                    "/pick/" +
-                      gameNames[gameHistory.type] +
-                      "?title=" +
-                      gameHistory.title +
-                      "&group=" +
-                      gameHistory.content,
-                    "/pick/" + gameNames[gameHistory.type]
-                  );
-                }}
-              />
-            ))}
+            {histories?.length === 0
+              ? "플레이한 게임이 없습니다."
+              : histories?.map((gameHistory: GameHistory) => (
+                  <HistoryCard
+                    gameHistoryId={gameHistory.id}
+                    key={`${gameHistory.type}/${gameHistory.id}`}
+                    title={gameHistory.title}
+                    gameType={gameHistory.type}
+                    numPeople={gameHistory.number}
+                    date={gameHistory.createdAt}
+                    onClick={() => {
+                      router.push(
+                        "/pick/" +
+                          gameNames[gameHistory.type] +
+                          "?title=" +
+                          gameHistory.title +
+                          "&group=" +
+                          gameHistory.content,
+                        "/pick/" + gameNames[gameHistory.type]
+                      );
+                    }}
+                  />
+                ))}
           </>
         )}
       </Layout>

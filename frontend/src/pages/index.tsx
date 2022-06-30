@@ -14,13 +14,12 @@ function IndexPage() {
   //     console.log(res.data);
   //   });
   // }
-  const [isShown, setIsShown] = useState(false);
 
   return (
-    <MenuBarContext.Provider value={{ isShown, setIsShown }}>
+    <>
       <Navigation />
       <Layout>모두의 추첨</Layout>
-    </MenuBarContext.Provider>
+    </>
   );
 }
 

@@ -2,10 +2,11 @@ import { css } from "@emotion/react";
 import axios from "axios";
 import AuthFormContainer from "components/common/AuthFormContainer";
 import Button from "components/common/Button";
+import Modal from "components/common/Modal";
 import useUser from "hooks/useUser";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { FormEvent, useRef } from "react";
+import { FormEvent, useRef, useState } from "react";
 
 import { StyledA, StyledInput } from "./styles";
 
@@ -30,6 +31,7 @@ function Login() {
 
   const router = useRouter();
   const data: FormValue = { email: "", password: "" };
+  const [showModal, setShowModal] = useState(false);
 
   async function loginRequest(data: FormValue) {
     // TODO: password frontend hashing
@@ -42,6 +44,7 @@ function Login() {
         router.push("/");
       })
       .catch((error) => {
+        setShowModal(true);
         console.log(error);
       });
     return false;
@@ -67,24 +70,34 @@ function Login() {
   };
 
   return (
-    <AuthFormContainer>
-      <form onSubmit={handleListSubmit}>
-        <StyledInput ref={emailInputRef} type="text" placeholder="이메일" />
-        <StyledInput ref={passwordInputRef} type="password" placeholder="비밀번호" />
-        <Button
-          type="submit"
-          css={css`
-            margin-bottom: 10px;
-            width: 100%;
-          `}
-        >
-          로그인
-        </Button>
-      </form>
-      <Link href={"/register"}>
-        <StyledA>계정이 없으신가요? 회원가입하기 &gt;</StyledA>
-      </Link>
-    </AuthFormContainer>
+    <>
+      <Modal
+        title="로그인 실패"
+        buttonText="확인"
+        show={showModal}
+        onClose={() => setShowModal(false)}
+      >
+        아이디와 비밀번호를 확인하세요
+      </Modal>
+      <AuthFormContainer>
+        <form onSubmit={handleListSubmit}>
+          <StyledInput ref={emailInputRef} type="text" placeholder="이메일" />
+          <StyledInput ref={passwordInputRef} type="password" placeholder="비밀번호" />
+          <Button
+            type="submit"
+            css={css`
+              margin-bottom: 10px;
+              width: 100%;
+            `}
+          >
+            로그인
+          </Button>
+        </form>
+        <Link href={"/register"}>
+          <StyledA>계정이 없으신가요? 회원가입하기 &gt;</StyledA>
+        </Link>
+      </AuthFormContainer>
+    </>
   );
 }
 

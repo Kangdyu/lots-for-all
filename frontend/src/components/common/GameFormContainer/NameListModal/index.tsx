@@ -18,7 +18,7 @@ function NameListModal({ show, onClose, onButtonClick, setGroup }: Props) {
     setGroup((group) =>
       group.concat(
         newGroup.members.map((member, idx) => ({
-          id: (group.length + idx).toString(),
+          id: (group.length + idx + 1).toString(),
           name: member,
         }))
       )

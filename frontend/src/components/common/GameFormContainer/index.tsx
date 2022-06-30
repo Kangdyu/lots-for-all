@@ -11,6 +11,7 @@ import {
 } from "react";
 import Button from "../Button";
 import SectionTitle from "../SectionTitle";
+import NameListModal from "./NameListModal";
 import {
   Flex,
   NameList,
@@ -51,6 +52,12 @@ const GameFormContainer = forwardRef((props: Props, ref: Ref<GameFormValues>) =>
     }
   }, []);
 
+  const [showNameListModal, setShowNameListModal] = useState(false);
+  const handleNameListButtonClick = useCallback(() => {
+    setShowNameListModal(true);
+  }, []);
+  const addNamesFromNameList = useCallback(() => {}, []);
+
   useImperativeHandle(ref, () => ({
     title: titleInputRef.current?.value,
     participants: nameList.map((item) => item.name),
@@ -79,7 +86,11 @@ const GameFormContainer = forwardRef((props: Props, ref: Ref<GameFormValues>) =>
           <Button type="submit" css={{ marginRight: "8px" }}>
             추가
           </Button>
-          {!loggedOut && <Button type="button">명단에서 추가</Button>}
+          {!loggedOut && (
+            <Button type="button" onClick={handleNameListButtonClick}>
+              명단에서 추가
+            </Button>
+          )}
         </NameListForm>
       </Flex>
 
@@ -105,6 +116,15 @@ const GameFormContainer = forwardRef((props: Props, ref: Ref<GameFormValues>) =>
         </NameList>
         {!loggedOut && <Button css={{ display: "block", margin: "0 auto" }}>명단 저장</Button>}
       </NameListContainer>
+
+      <NameListModal
+        show={showNameListModal}
+        onClose={() => setShowNameListModal(false)}
+        onButtonClick={() => {
+          addNamesFromNameList();
+          setShowNameListModal(false);
+        }}
+      />
     </>
   );
 });

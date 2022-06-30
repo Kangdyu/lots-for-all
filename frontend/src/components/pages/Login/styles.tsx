@@ -10,6 +10,7 @@ export const StyledA = styled.a`
   text-align: center;
   text-decoration: underline;
   color: ${(props) => props.theme.color.primary700};
+  cursor: pointer;
 `;
 
 export const StyledInput = styled(Input)`

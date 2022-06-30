@@ -41,7 +41,6 @@ function Register() {
     await axios
       .post<Data>("/signup", data)
       .then((response) => {
-        console.log(response.data.message);
         setIsRegisterSuccess(true);
         openModal({ messageString: "회원가입 성공! " });
       })
@@ -152,8 +151,6 @@ function Register() {
       data.password = passwordInputRef.current.value;
       passwordInputRef.current.value = "";
     }
-
-    console.log(data);
 
     registerRequest(data);
   };

@@ -79,7 +79,6 @@ function HistoryCard({
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
-          console.log(response.data.message);
           mutate();
         })
         .catch((error) => {

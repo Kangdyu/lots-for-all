@@ -1,6 +1,6 @@
-import Image, { StaticImageData } from "next/image";
+import { StaticImageData } from "next/image";
 import { HTMLAttributes } from "react";
-import { GameCardContainer, GameCardName } from "./styles";
+import { GameCardContainer, GameCardName, GameImage } from "./styles";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   imageSrc: StaticImageData;
@@ -11,7 +11,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 function GameCard({ imageSrc, imageAlt = "Game image", name, ...props }: Props) {
   return (
     <GameCardContainer {...props}>
-      <Image src={imageSrc} alt={imageAlt} width={160} height={160} />
+      <GameImage src={imageSrc} alt={imageAlt} width={160} height={160} />
       <GameCardName>{name}</GameCardName>
     </GameCardContainer>
   );

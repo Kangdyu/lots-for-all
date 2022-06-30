@@ -14,7 +14,7 @@ export const StyledUserName = styled.span`
   margin: 0 6px 0 12px;
 `;
 
-export const StyledProfilePicture = styled.div`
+export const StyledProfilePicture = styled.img`
   width: 36px;
   height: 36px;
   border-radius: 18px;

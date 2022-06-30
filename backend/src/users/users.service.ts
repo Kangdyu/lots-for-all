@@ -47,15 +47,17 @@ export class UsersService {
       id: entity.id,
       username: entity.username,
       email: entity.email,
-      imageUrl: entity.imageUrl,
+      imageNo: entity.imageNo,
+      imageUrl: `/${entity.imageNo}.png`,
     });
   }
 
-  private async createUserEntityByDto(dto: CreateUserDto): Promise<User> {
+  private async createUserEntityByDto(dto: CreateUserDto, randomProfile: boolean): Promise<User> {
     const user: User = new User();
     user.username = dto.username;
     user.email = dto.email;
     user.password = await bcrypt.hash(dto.password, this.SALT_OR_ROUNDS);
+    user.imageNo = randomProfile ? Math.floor(Math.random() * 10) : dto.imageNo;
 
     return user;
   }
@@ -95,8 +97,12 @@ export class UsersService {
   }
 
   async create(createUserDto: CreateUserDto): Promise<CommonResponse<UserInfoDto>> {
+    if (await this.usersRepository.findOneBy({ email: createUserDto.email })) {
+      throw new BadRequestException('email already exists');
+    }
+
     const createdUser: User = await this.usersRepository.save(
-      await this.createUserEntityByDto(createUserDto)
+      await this.createUserEntityByDto(createUserDto, true)
     );
 
     return {
@@ -112,7 +118,7 @@ export class UsersService {
       {
         id: user_id,
       },
-      await this.createUserEntityByDto(createUserDto)
+      await this.createUserEntityByDto(createUserDto, false)
     );
     return {
       message: 'success',

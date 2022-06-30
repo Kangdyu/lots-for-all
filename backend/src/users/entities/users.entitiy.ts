@@ -17,14 +17,14 @@ export class User {
   @Column({ type: 'varchar', length: '255', unique: true, nullable: false })
   email: string;
 
-  @Column({ type: 'varchar', length: '255', unique: true, nullable: false })
+  @Column({ type: 'varchar', length: '255', unique: false, nullable: false })
   username: string;
 
   @Column({ type: 'varchar', length: '255', nullable: false })
   password: string;
 
-  @Column({ type: 'varchar', length: '255', nullable: true })
-  imageUrl: string;
+  @Column({ type: 'int', nullable: false, default: 0 })
+  imageNo: number;
 
   @OneToMany(() => Group, (group) => group.user)
   groups: Group[];

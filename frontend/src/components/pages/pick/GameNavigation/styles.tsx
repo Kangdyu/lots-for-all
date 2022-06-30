@@ -10,7 +10,7 @@ export const GameNavigationAnchor = styled.a<{ selected: boolean; disabled?: boo
   font-weight: ${({ selected }) => (selected ? 400 : 100)};
   color: ${({ theme, selected, disabled }) =>
     disabled ? "#ccc" : selected ? theme.color.primary700 : theme.color.black};
-  cursor: ${({ disabled }) => disabled && "not-allowed"};
+  pointer-events: ${({ disabled }) => disabled && "none"};
 
   &:not(:last-child) {
     margin-right: 50px;

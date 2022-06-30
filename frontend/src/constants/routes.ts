@@ -16,12 +16,13 @@ export const NAV_ROUTES: Route[] = [
     name: "추첨",
   },
   {
-    path: "/presets",
-    name: "프리셋 관리",
-  },
-  {
     path: "/groups",
     name: "명단 관리",
+  },
+  {
+    path: "/presets",
+    name: "프리셋 관리",
+    disable: true,
   },
 ];
 

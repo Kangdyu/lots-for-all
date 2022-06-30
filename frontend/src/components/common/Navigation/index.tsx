@@ -25,7 +25,9 @@ function Navigation({ ...props }: Props) {
 
           {NAV_ROUTES.map((route) => (
             <Link key={route.path} href={route.path} passHref>
-              <NavBarContent selected={pathname === route.path}>{route.name}</NavBarContent>
+              <NavBarContent selected={pathname === route.path} disabled={route.disable}>
+                {route.name}
+              </NavBarContent>
             </Link>
           ))}
         </div>

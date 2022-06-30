@@ -2,11 +2,19 @@ import Button from "components/common/Button";
 import SectionTitle from "components/common/SectionTitle";
 import { GameRoute } from "constants/games";
 import useClientRect from "hooks/useClientRect";
+import useUser from "hooks/useUser";
 import { useRouter } from "next/router";
 import { FormEvent, HTMLAttributes, useCallback, useEffect, useRef, useState } from "react";
 import RacingGame from "../RacingGame";
 import RouletteGame from "../RouletteGame";
-import { Flex, NameListContainer, NameListForm, StyledInput, StyledNameTag } from "./styles";
+import {
+  Flex,
+  NameList,
+  NameListContainer,
+  NameListForm,
+  StyledInput,
+  StyledNameTag,
+} from "./styles";
 
 interface NameListItem {
   id: string;
@@ -18,6 +26,8 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 }
 
 function GameSecton({ game, ...props }: Props) {
+  const { loggedOut } = useUser();
+
   const router = useRouter();
   const [inGame, setInGame] = useState(false);
 
@@ -73,10 +83,12 @@ function GameSecton({ game, ...props }: Props) {
       <div css={{ display: inGame ? "none" : "block" }}>
         <Flex css={{ justifyContent: "space-between", marginBottom: "24px" }}>
           <SectionTitle>기본 설정</SectionTitle>
-          <Flex>
-            <Button css={{ marginRight: "8px" }}>프리셋</Button>
-            <Button>최근 플레이</Button>
-          </Flex>
+          {!loggedOut && (
+            <Flex>
+              <Button css={{ marginRight: "8px" }}>프리셋</Button>
+              <Button>최근 플레이</Button>
+            </Flex>
+          )}
         </Flex>
         <Flex css={{ justifyContent: "space-between", marginBottom: "40px" }}>
           <NameListForm onSubmit={handleListSubmit}>
@@ -90,30 +102,34 @@ function GameSecton({ game, ...props }: Props) {
             <Button type="submit" css={{ marginRight: "8px" }}>
               추가
             </Button>
-            <Button type="button">명단에서 추가</Button>
+            {!loggedOut && <Button type="button">명단에서 추가</Button>}
           </NameListForm>
         </Flex>
 
         <SectionTitle css={{ marginBottom: "24px" }}>참여 인원</SectionTitle>
         <NameListContainer>
-          {nameList.map((item) => (
-            <StyledNameTag
-              key={item.id}
-              onDelete={() => setNameList((p) => p.filter((pItem) => pItem.id !== item.id))}
-              onNameChange={(changedName) =>
-                setNameList((p) => {
-                  const newList = [...p];
-                  newList.find((nItem) => nItem.id === item.id)!.name = changedName;
-                  return newList;
-                })
-              }
-            >
-              {item.name}
-            </StyledNameTag>
-          ))}
+          <NameList>
+            {nameList.map((item) => (
+              <StyledNameTag
+                key={item.id}
+                onDelete={() => setNameList((p) => p.filter((pItem) => pItem.id !== item.id))}
+                onNameChange={(changedName) =>
+                  setNameList((p) => {
+                    const newList = [...p];
+                    newList.find((nItem) => nItem.id === item.id)!.name = changedName;
+                    return newList;
+                  })
+                }
+              >
+                {item.name}
+              </StyledNameTag>
+            ))}
+            <br />
+          </NameList>
+          {!loggedOut && <Button css={{ display: "block", margin: "0 auto" }}>명단 저장</Button>}
         </NameListContainer>
 
-        <Button css={{ display: "block", margin: "0 auto" }} onClick={startGame}>
+        <Button css={{ width: "100%" }} onClick={startGame} variant="danger">
           게임 시작
         </Button>
       </div>

@@ -40,7 +40,6 @@ function RouletteGame({ canvasWidth, canvasHeight, participants, ...props }: Pro
   };
 
   const handleStopButtonClick = () => {
-    setGameStatus(RouletteGameStatus.STOPPING);
     roulette.stop();
   };
 

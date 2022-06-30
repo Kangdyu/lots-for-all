@@ -5,6 +5,8 @@ export const StyledModal = styled.div`
   max-width: 1100px;
   width: 500px;
   min-height: 300px;
+  max-height: 100vh;
+  overflow-y: scroll;
   margin: 0 auto;
   padding: 24px;
   background-color: ${(props) => props.theme.color.white};

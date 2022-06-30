@@ -40,7 +40,11 @@ export class UsersController {
   @ApiBearerAuth('access-token')
   @UseGuards(JwtAuthGuard)
   @Get('users/:user_id')
-  async getUser(@Param() param: { user_id: number }): Promise<CommonResponse<UserInfoDto>> {
+  async getUser(
+    @Req() req: Request,
+    @Param() param: { user_id: number }
+  ): Promise<CommonResponse<UserInfoDto>> {
+    await this.usersService.checkUserAuthByJWT(req, param.user_id);
     return await this.usersService.find(param.user_id);
   }
 
@@ -51,9 +55,11 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Put('users/:user_id')
   async updateUser(
+    @Req() req: Request,
     @Param() param: { user_id: number },
     @Body() createUserDto: CreateUserDto
   ): Promise<CommonResponse<null>> {
+    await this.usersService.checkUserAuthByJWT(req, param.user_id);
     return await this.usersService.update(param.user_id, createUserDto);
   }
 
@@ -62,7 +68,11 @@ export class UsersController {
   @ApiBearerAuth('access-token')
   @UseGuards(JwtAuthGuard)
   @Delete('users/:user_id')
-  async deleteUser(@Param() param: { user_id: number }): Promise<CommonResponse<null>> {
+  async deleteUser(
+    @Req() req: Request,
+    @Param() param: { user_id: number }
+  ): Promise<CommonResponse<null>> {
+    await this.usersService.checkUserAuthByJWT(req, param.user_id);
     return await this.usersService.delete(param.user_id);
   }
 }

@@ -27,3 +27,8 @@ export interface GameHistory {
   result: string[]; // 뽑힌 명단
   createdAt: Date;
 }
+export interface Group {
+  id: number;
+  title: string;
+  members: string[];
+}

@@ -8,6 +8,7 @@ import useUser from "hooks/useUser";
 import logout from "utils/logout";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { SERVER_URL } from "constants/endpoints";
 
 const ProfileCard = styled.div`
   max-width: 1100px;
@@ -21,7 +22,7 @@ const ProfileCard = styled.div`
   display: flex;
 `;
 
-const ProfilePicture = styled.div`
+const ProfilePicture = styled.img`
   width: 128px;
   height: 128px;
   border-radius: 64px;
@@ -74,7 +75,7 @@ function SettingsPage() {
       <Navigation />
       <Layout>
         <ProfileCard>
-          <ProfilePicture />
+          <ProfilePicture src={`${SERVER_URL}${user?.imageUrl}`} alt="avatar" />
           <ActionContainer>
             <InfoContainer>
               <Name>{user?.username}</Name>

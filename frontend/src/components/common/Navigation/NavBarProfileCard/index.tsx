@@ -1,3 +1,4 @@
+import { SERVER_URL } from "constants/endpoints";
 import useUser from "hooks/useUser";
 import { HTMLAttributes, useState } from "react";
 import NavBarProfileDropdown from "./NavBarProfileDropdown";
@@ -21,7 +22,7 @@ function NavBarProfileCard({ ...props }: Props) {
         }}
         {...props}
       >
-        <StyledProfilePicture />
+        <StyledProfilePicture src={`${SERVER_URL}${user?.imageUrl}`} alt="avatar" />
         <StyledUserName>{user?.username}</StyledUserName>
         <span>∨</span>
       </StyledNavBarProfileCard>

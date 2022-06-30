@@ -1,4 +1,15 @@
-import { Controller, Body, Param, Get, Post, Delete, UseGuards, Query, Req } from '@nestjs/common';
+import {
+  Controller,
+  Body,
+  Param,
+  Get,
+  Post,
+  Delete,
+  UseGuards,
+  Query,
+  Req,
+  Put,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { CommonResponse } from 'src/common/interfaces/CommonResponse';
@@ -27,7 +38,7 @@ export class PresetsController {
   @ApiBearerAuth('access-token')
   @UseGuards(JwtAuthGuard)
   @Get('/:user_id/presets')
-  async getGroups(
+  async getPresets(
     @Req() req: Request,
     @Param() param: { user_id: number },
     @Query() query: { type?: number }
@@ -47,7 +58,7 @@ export class PresetsController {
   @ApiBearerAuth('access-token')
   @UseGuards(JwtAuthGuard)
   @Get('/:user_id/presets/:preset_id')
-  async getGroupOne(
+  async getPresetOne(
     @Req() req: Request,
     @Param() param: { user_id: number; preset_id: number },
     @Query() query: { type: number }
@@ -62,7 +73,7 @@ export class PresetsController {
   @ApiBearerAuth('access-token')
   @UseGuards(JwtAuthGuard)
   @Post('/:user_id/presets')
-  async signup(
+  async createPreset(
     @Req() req: Request,
     @Param() param: { user_id: number },
     @Body() createPresetDto: CreatePresetDto
@@ -71,9 +82,30 @@ export class PresetsController {
     return await this.presetsService.create(param.user_id, createPresetDto);
   }
 
+  @ApiOperation({ summary: '프리셋 업데이트' })
+  @ApiBody({ type: CreatePresetLadderDto })
+  @ApiParam({ name: 'user_id', required: true, description: '유저 아이디' })
+  @ApiParam({ name: 'preset_id', required: true, description: '프리셋 아이디' })
+  @ApiBearerAuth('access-token')
+  @UseGuards(JwtAuthGuard)
+  @Put('/:user_id/presets/:preset_id')
+  async updatePreset(
+    @Req() req: Request,
+    @Param() param: { user_id: number; preset_id: number },
+    @Body() createPresetDto: CreatePresetDto
+  ): Promise<CommonResponse<null>> {
+    await this.usersService.checkUserAuthByJWT(req, param.user_id);
+    return await this.presetsService.update(
+      param.user_id,
+      param.preset_id,
+      createPresetDto.type,
+      createPresetDto
+    );
+  }
+
   @ApiOperation({ summary: '프리셋 삭제' })
   @ApiParam({ name: 'user_id', required: true, description: '유저 아이디' })
-  @ApiParam({ name: 'history_id', required: true, description: '기록 아이디' })
+  @ApiParam({ name: 'preset_id', required: true, description: '기록 아이디' })
   @ApiQuery({
     name: 'type',
     required: true,
@@ -82,11 +114,11 @@ export class PresetsController {
   @ApiBearerAuth('access-token')
   @UseGuards(JwtAuthGuard)
   @Delete('/:user_id/presets/:preset_id')
-  async deleteUser(
+  async deletePreset(
     @Req() req: Request,
     @Param() param: { user_id: number; preset_id: number },
     @Query() query: { type?: number }
-  ) {
+  ): Promise<CommonResponse<null>> {
     await this.usersService.checkUserAuthByJWT(req, param.user_id);
     return await this.presetsService.delete(param.user_id, param.preset_id, query.type);
   }

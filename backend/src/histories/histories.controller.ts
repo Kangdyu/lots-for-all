@@ -27,7 +27,7 @@ export class HistoriesController {
   @ApiBearerAuth('access-token')
   @UseGuards(JwtAuthGuard)
   @Get('/:user_id/histories')
-  async getGroups(
+  async getHistories(
     @Req() req: Request,
     @Param() param: { user_id: number },
     @Query() query: { type?: number }
@@ -47,7 +47,7 @@ export class HistoriesController {
   @ApiBearerAuth('access-token')
   @UseGuards(JwtAuthGuard)
   @Get('/:user_id/histories/:history_id')
-  async getGroupOne(
+  async getHistoryOne(
     @Req() req: Request,
     @Param() param: { user_id: number; history_id: number },
     @Query() query: { type: number }
@@ -62,7 +62,7 @@ export class HistoriesController {
   @ApiBearerAuth('access-token')
   @UseGuards(JwtAuthGuard)
   @Post('/:user_id/histories')
-  async signup(
+  async createHistory(
     @Req() req: Request,
     @Param() param: { user_id: number },
     @Body() createHistoryDto: CreateHistoryDto
@@ -82,11 +82,11 @@ export class HistoriesController {
   @ApiBearerAuth('access-token')
   @UseGuards(JwtAuthGuard)
   @Delete('/:user_id/histories/:history_id')
-  async deleteUser(
+  async deleteHistory(
     @Req() req: Request,
     @Param() param: { user_id: number; history_id: number },
     @Query() query: { type?: number }
-  ) {
+  ): Promise<CommonResponse<null>> {
     await this.usersService.checkUserAuthByJWT(req, param.user_id);
     return await this.historiesService.delete(param.user_id, param.history_id, query.type);
   }

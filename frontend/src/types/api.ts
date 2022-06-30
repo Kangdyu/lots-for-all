@@ -12,5 +12,6 @@ export interface User {
 
 export interface Group {
   id: number;
+  title: string;
   members: string[];
 }

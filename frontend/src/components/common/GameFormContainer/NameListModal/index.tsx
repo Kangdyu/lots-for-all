@@ -7,7 +7,7 @@ interface Props extends ComponentProps<typeof Modal> {}
 
 function NameListModal({ show, onClose, onButtonClick }: Props) {
   const { user } = useUser();
-  const { groups, error } = useGroups(user?.id);
+  const { groups } = useGroups(user?.id);
 
   return (
     <Modal
@@ -17,7 +17,9 @@ function NameListModal({ show, onClose, onButtonClick }: Props) {
       onClose={onClose}
       onButtonClick={onButtonClick}
     >
-      {groups != null && !error && groups.map((group) => <p key={group.id}>그룹</p>)}
+      {groups?.map((group) => (
+        <p key={group.id}>{group.title}</p>
+      ))}
     </Modal>
   );
 }

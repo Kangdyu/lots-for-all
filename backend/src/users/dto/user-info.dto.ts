@@ -15,10 +15,17 @@ export class UserInfoDto {
   @IsString()
   username: string;
 
+  @IsNumber()
+  imageNo: number;
+
   @IsOptional()
   imageUrl: string;
 
-  constructor(partial: Partial<User>) {
-    Object.assign(this, partial);
+  constructor(entity: Partial<User & { imageUrl: string }>) {
+    this.id = entity.id;
+    this.email = entity.email;
+    this.username = entity.username;
+    this.imageNo = entity.imageNo;
+    this.imageUrl = entity.imageUrl;
   }
 }

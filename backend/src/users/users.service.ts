@@ -47,7 +47,8 @@ export class UsersService {
       id: entity.id,
       username: entity.username,
       email: entity.email,
-      imageUrl: entity.imageUrl,
+      imageNo: entity.imageNo,
+      imageUrl: `/${entity.imageNo}.png`,
     });
   }
 
@@ -56,6 +57,7 @@ export class UsersService {
     user.username = dto.username;
     user.email = dto.email;
     user.password = await bcrypt.hash(dto.password, this.SALT_OR_ROUNDS);
+    user.imageNo = 0;
 
     return user;
   }

@@ -26,7 +26,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
           id: user.id,
           email: user.email,
           username: user.username,
-          imageUrl: user.imageUrl,
+          imageNo: user.imageNo,
+          imageUrl: `/${user.imageNo}.png`,
         }),
         message: 'success',
       };

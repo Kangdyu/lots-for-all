@@ -24,7 +24,7 @@ export interface GameHistory {
   title: string; // 기록 이름
   number: number; // 인원 수
   content: string[]; // 제비뽑기 전체 명단
-  result: string[]; // 뽑힌 명단
+  result: string[] | string; // 뽑힌 명단
   createdAt: Date;
 }
 export interface Group {

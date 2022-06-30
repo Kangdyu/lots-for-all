@@ -1,4 +1,5 @@
 import axios from "axios";
+import Modal from "components/common/Modal";
 import useGameHistories from "hooks/useGameHistory";
 import useUser from "hooks/useUser";
 import Image from "next/image";
@@ -10,6 +11,7 @@ import playButton from "../../../../../public/images/playButton.svg";
 import transhCanIcon from "../../../../../public/images/trashCan.svg";
 
 import {
+  Span,
   StyledHistoryCard,
   StyledHistoryCardAction,
   StyledHistoryCardDate,
@@ -17,6 +19,8 @@ import {
   StyledHistoryCardIcon,
   StyledHistoryCardInfo,
   StyledHistoryCardTitle,
+  StyledHistoryDetailContent,
+  StyledNameContent,
 } from "./styles";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
@@ -25,6 +29,8 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   gameType: GameType;
   numPeople: number;
   date: Date;
+  people: string[];
+  winner: string[] | string;
   onClick: () => void;
 }
 function HistoryCard({
@@ -34,8 +40,11 @@ function HistoryCard({
   numPeople,
   date,
   onClick,
+  people,
+  winner,
   ...props
 }: Props) {
+  const [showModal, setShowModal] = useState(false);
   const { user } = useUser();
 
   const { mutate } = useGameHistories(user?.id);
@@ -79,33 +88,68 @@ function HistoryCard({
     }
     return false;
   }
-
+  console.log("WINNER: ", winner);
   return (
-    <StyledHistoryCard>
-      <StyledHistoryCardInfo>
-        <StyledHistoryCardTitle>{title}</StyledHistoryCardTitle>
-        <StyledHistoryCardDetail>
-          {gameName} | {numPeople} 명
-        </StyledHistoryCardDetail>
-      </StyledHistoryCardInfo>
-      <StyledHistoryCardAction>
-        <StyledHistoryCardDate>{date.toString()}</StyledHistoryCardDate>
-        <Link href="/">
-          <a onClick={onClick}>
-            <StyledHistoryCardIcon>
-              <Image width={40} height={40} src={playButton} alt="playButton" />
-            </StyledHistoryCardIcon>
-          </a>
-        </Link>
-        <Link href="/">
-          <a onClick={deleteHistory}>
-            <StyledHistoryCardIcon>
-              <Image width={40} height={40} src={transhCanIcon} alt="trashCanIcon" />
-            </StyledHistoryCardIcon>
-          </a>
-        </Link>
-      </StyledHistoryCardAction>
-    </StyledHistoryCard>
+    <>
+      <Modal
+        show={showModal}
+        title={title}
+        onClose={() => {
+          setShowModal(false);
+        }}
+        showButton={false}
+      >
+        <StyledHistoryDetailContent>
+          <Span>플레이 날짜: {date.toString()}</Span>
+          <Span>참가 인원 수: {numPeople} 명</Span>
+          <Span>참가 인원</Span>
+          <StyledNameContent>
+            {people?.map((person: string, i) => (
+              <Span key={i}>{person}</Span>
+            ))}
+          </StyledNameContent>
+          <Span>우승 인원</Span>
+          <StyledNameContent>
+            {typeof winner === "string" ? (
+              <Span>{winner}</Span>
+            ) : (
+              winner?.map((winner: string, i) => <Span key={i}>{winner}</Span>)
+            )}
+          </StyledNameContent>
+        </StyledHistoryDetailContent>
+      </Modal>
+      <StyledHistoryCard
+        onClick={({ target, currentTarget }) => {
+          if (target === currentTarget) {
+            setShowModal(true);
+          }
+        }}
+      >
+        <StyledHistoryCardInfo>
+          <StyledHistoryCardTitle>{title}</StyledHistoryCardTitle>
+          <StyledHistoryCardDetail>
+            {gameName} | {numPeople} 명
+          </StyledHistoryCardDetail>
+        </StyledHistoryCardInfo>
+        <StyledHistoryCardAction>
+          <StyledHistoryCardDate>{date.toString()}</StyledHistoryCardDate>
+          <Link href="/">
+            <a onClick={onClick}>
+              <StyledHistoryCardIcon>
+                <Image width={40} height={40} src={playButton} alt="playButton" />
+              </StyledHistoryCardIcon>
+            </a>
+          </Link>
+          <Link href="/">
+            <a onClick={deleteHistory}>
+              <StyledHistoryCardIcon>
+                <Image width={40} height={40} src={transhCanIcon} alt="trashCanIcon" />
+              </StyledHistoryCardIcon>
+            </a>
+          </Link>
+        </StyledHistoryCardAction>
+      </StyledHistoryCard>
+    </>
   );
 }
 

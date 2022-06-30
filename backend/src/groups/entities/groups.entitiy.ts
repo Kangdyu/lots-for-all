@@ -10,6 +10,9 @@ export class Group {
   @JoinColumn()
   user: User;
 
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  title: string;
+
   @Column({ type: 'text', nullable: true })
   members: string;
 }

@@ -49,6 +49,7 @@ function GameSecton({ game, ...props }: Props) {
       else if (game === "roulette")
         return (
           <RouletteGame
+            gameTitle={gameFormRef.current.title}
             canvasWidth={width}
             canvasHeight={700}
             participants={gameFormRef.current.participants}

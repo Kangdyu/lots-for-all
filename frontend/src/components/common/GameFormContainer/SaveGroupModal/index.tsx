@@ -3,6 +3,7 @@ import Input from "components/common/Input";
 import Modal from "components/common/Modal";
 import useUser from "hooks/useUser";
 import { ComponentProps, FormEvent, useCallback, useRef } from "react";
+import { useSWRConfig } from "swr";
 
 interface Props extends ComponentProps<typeof Modal> {
   members: string[];
@@ -10,6 +11,7 @@ interface Props extends ComponentProps<typeof Modal> {
 
 function SaveGroupModal({ show, onClose, members }: Props) {
   const { user } = useUser();
+  const { mutate } = useSWRConfig();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -19,19 +21,20 @@ function SaveGroupModal({ show, onClose, members }: Props) {
 
       async function submitGroup() {
         if (!inputRef.current) return;
+        if (!user) return;
 
         const token = localStorage.getItem("token");
         if (token == null || token === "") return;
 
         try {
-          await axios.post(
-            `/users/${user?.id}/groups`,
-            {
-              title: inputRef.current.value,
-              members,
-            },
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
+          const body = {
+            title: inputRef.current.value,
+            members,
+          };
+          await axios.post(`/users/${user.id}/groups`, body, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          mutate(`users/${user.id}/groups`);
           onClose();
         } catch (e) {
           console.log(e);
@@ -39,7 +42,7 @@ function SaveGroupModal({ show, onClose, members }: Props) {
       }
       submitGroup();
     },
-    [user, members]
+    [user, members, onClose, mutate]
   );
 
   return (

@@ -41,7 +41,7 @@ function NameListModal({ show, onClose, onButtonClick, setGroup }: Props) {
             onClose();
           }}
         >
-          명단
+          {group.title}
         </GroupButton>
       ))}
     </Modal>

@@ -57,6 +57,7 @@ function GameSecton({ game, ...props }: Props) {
       else
         return (
           <RacingGame
+            gameTitle={gameFormRef.current.title}
             canvasWidth={width}
             canvasHeight={100 + gameFormRef.current.participants.length * 65}
             participants={gameFormRef.current.participants}

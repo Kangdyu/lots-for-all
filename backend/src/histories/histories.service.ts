@@ -187,9 +187,6 @@ export class HistoriesService {
   }
 
   async delete(user_id: number, history_id: number, type: number) {
-    console.log(typeof user_id);
-    console.log(typeof history_id);
-    console.log(typeof type);
     await this.usersService.checkUserExist({ id: user_id });
     await this.checkHistoryExist(type, history_id);
 

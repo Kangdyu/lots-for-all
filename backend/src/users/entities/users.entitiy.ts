@@ -4,6 +4,10 @@ import { HistoryLadder } from 'src/histories/entities/historyLadder.entity';
 import { HistoryRoulette } from 'src/histories/entities/historyRoulette.entity';
 import { HistoryHorse } from 'src/histories/entities/historyHorse.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { PresetLottery } from 'src/presets/entities/presetLottery.entity';
+import { PresetLadder } from 'src/presets/entities/presetLadder.entity';
+import { PresetHorse } from 'src/presets/entities/presetHorse.entity';
+import { PresetRoulette } from 'src/presets/entities/presetRoulette.entity';
 
 @Entity()
 export class User {
@@ -36,4 +40,16 @@ export class User {
 
   @OneToMany(() => HistoryRoulette, (historyRoulette) => historyRoulette.user)
   historyRoulettes: HistoryRoulette[];
+
+  @OneToMany(() => PresetLottery, (presetLottery) => presetLottery.user)
+  presetLotteries: PresetLottery[];
+
+  @OneToMany(() => PresetLadder, (presetLadder) => presetLadder.user)
+  presetLadders: PresetLadder[];
+
+  @OneToMany(() => HistoryHorse, (presetHorse) => presetHorse.user)
+  presetHorses: PresetHorse[];
+
+  @OneToMany(() => PresetRoulette, (presetRoulette) => presetRoulette.user)
+  presetRoulettes: PresetRoulette[];
 }

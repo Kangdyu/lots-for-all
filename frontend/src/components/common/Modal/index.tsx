@@ -16,6 +16,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   buttonText?: string;
   show: boolean;
   onClose: () => void;
+  showButton?: boolean;
   onButtonClick?: () => void;
 }
 
@@ -25,6 +26,7 @@ function Modal({
   buttonText = "확인",
   show,
   onClose,
+  showButton = true,
   onButtonClick = onClose,
   ...props
 }: Props) {
@@ -57,9 +59,11 @@ function Modal({
           <StyledModalQuitButton onClick={onClose}>×</StyledModalQuitButton>
         </TitleAndQuitButton>
         <StyledModalContent>{children}</StyledModalContent>
-        <StyledModalButton>
-          <Button onClick={onButtonClick}>{buttonText}</Button>
-        </StyledModalButton>
+        {showButton && (
+          <StyledModalButton>
+            <Button onClick={onButtonClick}>{buttonText}</Button>
+          </StyledModalButton>
+        )}
       </StyledModal>
     </Dimmed>
   ) : null;

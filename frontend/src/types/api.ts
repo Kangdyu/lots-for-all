@@ -9,3 +9,9 @@ export interface User {
   email: string;
   imageUrl: string;
 }
+
+export interface Group {
+  id: number;
+  title: string;
+  members: string[];
+}

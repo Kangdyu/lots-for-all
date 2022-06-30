@@ -1,8 +1,9 @@
 import useSWR from "swr";
-import { userFetcher } from "utils/fetcher";
+import { ApiResponse, User } from "types/api";
+import { authFetcher } from "utils/fetcher";
 
 function useUser() {
-  const { data, mutate, error } = useSWR("user", userFetcher, {
+  const { data, mutate, error } = useSWR<ApiResponse<User>>("/login", authFetcher, {
     revalidateOnFocus: false,
     shouldRetryOnError: false,
   });
@@ -11,7 +12,7 @@ function useUser() {
 
   return {
     loggedOut,
-    user: data,
+    user: data?.result,
     error,
     mutate,
   };

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import Input from "components/common/Input";
-import NameTag from "../NameTag";
+import NameTag from "./NameTag";
 
 export const Flex = styled.div`
   display: flex;

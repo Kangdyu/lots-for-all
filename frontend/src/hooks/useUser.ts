@@ -2,7 +2,10 @@ import useSWR from "swr";
 import { userFetcher } from "utils/fetcher";
 
 function useUser() {
-  const { data, mutate, error } = useSWR("user", userFetcher);
+  const { data, mutate, error } = useSWR("user", userFetcher, {
+    revalidateOnFocus: false,
+    shouldRetryOnError: false,
+  });
 
   const loggedOut: boolean = error && error.status === 401;
 

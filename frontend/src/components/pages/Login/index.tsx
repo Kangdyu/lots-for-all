@@ -2,6 +2,7 @@ import { css } from "@emotion/react";
 import axios from "axios";
 import AuthFormContainer from "components/common/AuthFormContainer";
 import Button from "components/common/Button";
+import useUser from "hooks/useUser";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FormEvent, useRef } from "react";
@@ -25,6 +26,8 @@ interface FormValue {
 }
 
 function Login() {
+  const { mutate } = useUser();
+
   const router = useRouter();
   const data: FormValue = { email: "", password: "" };
 
@@ -35,6 +38,7 @@ function Login() {
       .then((response) => {
         console.log(response.data.result.token);
         localStorage.setItem("token", response.data.result.token);
+        mutate();
         router.push("/");
       })
       .catch((error) => {

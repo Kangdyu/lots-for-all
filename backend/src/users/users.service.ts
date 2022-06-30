@@ -28,6 +28,20 @@ export class UsersService {
     return user;
   }
 
+  async checkUserAuthByJWT(req: Request, user_id) {
+    if ((await this.getUserByJWT(req)).id != user_id) {
+      throw new UnauthorizedException('Unauthorized');
+    }
+  }
+
+  private async getUserByJWT(req: Request): Promise<User> {
+    const decodedJwt = (await this.jwtService.decode(
+      req.headers.authorization.split(' ')[1]
+    )) as Payload;
+
+    return await this.usersRepository.findOneBy({ id: parseInt(decodedJwt.sub) });
+  }
+
   private entityToDto(entity: User): UserInfoDto {
     return new UserInfoDto({
       id: entity.id,
@@ -74,14 +88,8 @@ export class UsersService {
   }
 
   async logined(req: Request): Promise<CommonResponse<UserInfoDto>> {
-    const decodedJwt = (await this.jwtService.decode(
-      req.headers.authorization.split(' ')[1]
-    )) as Payload;
-
     return {
-      result: this.entityToDto(
-        await this.usersRepository.findOneBy({ id: parseInt(decodedJwt.sub) })
-      ),
+      result: this.entityToDto(await this.getUserByJWT(req)),
       message: 'success',
     };
   }

@@ -72,4 +72,9 @@ export const Span = styled.span`
 
 export const StyledNameContent = styled.div`
   display: flex;
+  flex-wrap: wrap;
+
+  span {
+    margin: 0 8px 8px 0;
+  }
 `;

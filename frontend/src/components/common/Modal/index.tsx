@@ -35,8 +35,10 @@ function Modal({
   useEffect(() => {
     setIsBrowser(true);
     const element = document.querySelector("body");
-    if (element != null) {
-      element.style.overflow = "hidden";
+    if (show) {
+      if (element != null) {
+        element.style.overflow = "hidden";
+      }
     }
 
     return () => {

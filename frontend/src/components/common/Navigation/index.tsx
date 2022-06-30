@@ -7,7 +7,7 @@ import { NAV_ROUTES } from "constants/routes";
 import NavBarProfileCard from "./NavBarProfileCard";
 import useUser from "hooks/useUser";
 
-interface Props extends HTMLAttributes<HTMLElement> {}
+interface Props extends Omit<HTMLAttributes<HTMLElement>, "ref"> {}
 
 // TODO: 로그인 구현 시 loggedIn prop 활용하여 수정
 function Navigation({ ...props }: Props) {
@@ -25,7 +25,9 @@ function Navigation({ ...props }: Props) {
 
           {NAV_ROUTES.map((route) => (
             <Link key={route.path} href={route.path} passHref>
-              <NavBarContent selected={pathname === route.path}>{route.name}</NavBarContent>
+              <NavBarContent selected={pathname === route.path} disabled={route.disable}>
+                {route.name}
+              </NavBarContent>
             </Link>
           ))}
         </div>
@@ -33,7 +35,9 @@ function Navigation({ ...props }: Props) {
         <div>
           {loggedOut ? (
             <Link href="/login">
-              <Button>로그인</Button>
+              <a>
+                <Button>로그인</Button>
+              </a>
             </Link>
           ) : (
             <NavBarProfileCard />

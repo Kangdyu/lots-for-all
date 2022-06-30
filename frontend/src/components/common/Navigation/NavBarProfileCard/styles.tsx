@@ -5,6 +5,8 @@ export const StyledNavBarProfileCard = styled.div`
   max-height: 36px;
   display: flex;
   align-items: center;
+  cursor: pointer;
+  user-select: none;
 `;
 
 export const StyledUserName = styled.span`

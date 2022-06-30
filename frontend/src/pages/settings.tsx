@@ -4,6 +4,10 @@ import Navigation from "components/common/Navigation";
 import styled from "@emotion/styled";
 import Button from "components/common/Button";
 import { hexToRgba } from "utils/color";
+import useUser from "hooks/useUser";
+import logout from "utils/logout";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const ProfileCard = styled.div`
   max-width: 1100px;
@@ -45,7 +49,7 @@ const ButtonContainer = styled.div`
 const Name = styled.span`
   font-size: 24px;
   font-weight: 400;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 `;
 
 const Email = styled.span`
@@ -53,7 +57,18 @@ const Email = styled.span`
   font-weight: 100;
 `;
 
-function IndexPage() {
+function SettingsPage() {
+  const router = useRouter();
+
+  const { user, loggedOut, mutate } = useUser();
+  // const { mutate } = useSWRConfig();
+
+  useEffect(() => {
+    if (loggedOut) {
+      router.replace("/");
+    }
+  }, [router, loggedOut]);
+
   return (
     <>
       <Navigation />
@@ -62,12 +77,21 @@ function IndexPage() {
           <ProfilePicture />
           <ActionContainer>
             <InfoContainer>
-              <Name>강대호</Name>
-              <Email>daeho@daeho.com</Email>
+              <Name>{user?.username}</Name>
+              <Email>{user?.email}</Email>
             </InfoContainer>
             <ButtonContainer>
-              <Button>비밀번호 변경</Button>
-              <Button variant="danger">로그아웃</Button>
+              {/* <Button>비밀번호 변경</Button> */}
+              <div></div>
+              <Button
+                variant="danger"
+                onClick={() => {
+                  logout();
+                  mutate();
+                }}
+              >
+                로그아웃
+              </Button>
             </ButtonContainer>
           </ActionContainer>
         </ProfileCard>
@@ -76,4 +100,4 @@ function IndexPage() {
   );
 }
 
-export default IndexPage;
+export default SettingsPage;

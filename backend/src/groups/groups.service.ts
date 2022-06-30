@@ -30,6 +30,7 @@ export class GroupsService {
   private async createUserEntityByDto(dto: CreateGroupDto, user: User): Promise<Group> {
     const group: Group = new Group();
     group.user = user;
+    group.title = dto.title;
     group.members = dto.members.join(',');
 
     return group;
@@ -51,30 +52,23 @@ export class GroupsService {
     };
   }
 
-  async find(user_id: number): Promise<CommonResponse<{ groups: GroupInfoDto[] }>> {
-    this.usersService.checkUserExist({ id: user_id });
+  async find(user_id: number): Promise<CommonResponse<GroupInfoDto[]>> {
+    const user = await this.usersService.checkUserExist({ id: user_id });
 
-    const groups: Group[] = await this.groupRepository.find();
+    const groups: Group[] = await this.groupRepository.find({ where: { user: user } });
 
     return {
-      result: {
-        groups: groups.map((group) => this.entityToDto(group)),
-      },
+      result: groups.map((group) => this.entityToDto(group)),
       message: 'success',
     };
   }
 
-  async findOne(
-    user_id: number,
-    group_id: number
-  ): Promise<CommonResponse<{ group: GroupInfoDto }>> {
+  async findOne(user_id: number, group_id: number): Promise<CommonResponse<GroupInfoDto>> {
     this.usersService.checkUserExist({ id: user_id });
     const group: Group = await this.checkGroupExist(group_id);
 
     return {
-      result: {
-        group: this.entityToDto(group),
-      },
+      result: this.entityToDto(group),
       message: 'success',
     };
   }

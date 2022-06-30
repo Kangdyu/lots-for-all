@@ -16,9 +16,7 @@ export class GroupsController {
   @ApiBearerAuth('access-token')
   @UseGuards(JwtAuthGuard)
   @Get('/:user_id/groups')
-  async getGroups(
-    @Param() param: { user_id: number }
-  ): Promise<CommonResponse<{ groups: GroupInfoDto[] }>> {
+  async getGroups(@Param() param: { user_id: number }): Promise<CommonResponse<GroupInfoDto[]>> {
     return await this.groupsService.find(param.user_id);
   }
 
@@ -30,7 +28,7 @@ export class GroupsController {
   @Get('/:user_id/groups/:group_id')
   async getGroupOne(
     @Param() param: { user_id: number; group_id: number }
-  ): Promise<CommonResponse<{ group: GroupInfoDto }>> {
+  ): Promise<CommonResponse<GroupInfoDto>> {
     return await this.groupsService.findOne(param.user_id, param.group_id);
   }
 
@@ -40,7 +38,7 @@ export class GroupsController {
   @ApiBearerAuth('access-token')
   @UseGuards(JwtAuthGuard)
   @Post('/:user_id/groups')
-  async signup(
+  async createGroup(
     @Param() param: { user_id: number },
     @Body() createGroupDto: CreateGroupDto
   ): Promise<CommonResponse<GroupInfoDto>> {
@@ -54,7 +52,7 @@ export class GroupsController {
   @ApiBearerAuth('access-token')
   @UseGuards(JwtAuthGuard)
   @Put('/:user_id/groups/:group_id')
-  async updateUser(
+  async updateGroup(
     @Param() param: { user_id: number; group_id: number },
     @Body() createGroupDto: CreateGroupDto
   ): Promise<CommonResponse<null>> {
@@ -67,7 +65,7 @@ export class GroupsController {
   @ApiBearerAuth('access-token')
   @UseGuards(JwtAuthGuard)
   @Delete('/:user_id/groups/:group_id')
-  async deleteUser(
+  async deleteGroup(
     @Param() param: { user_id: number; group_id: number }
   ): Promise<CommonResponse<null>> {
     return await this.groupsService.delete(param.user_id, param.group_id);

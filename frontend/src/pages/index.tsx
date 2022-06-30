@@ -34,7 +34,7 @@ const NewGameAnchor = styled.a`
 `;
 
 function IndexPage() {
-  const { user } = useUser();
+  const { user, loggedOut } = useUser();
   const { histories } = useGameHistories(user?.id);
 
   const router = useRouter();
@@ -47,7 +47,9 @@ function IndexPage() {
         <Link href="/pick" passHref>
           <NewGameAnchor>게임 시작하기 &gt;</NewGameAnchor>
         </Link>
-        <SectionTitle css={{ marginBottom: "24px" }}>최근 플레이한 게임</SectionTitle>
+        {!loggedOut && (
+          <SectionTitle css={{ marginBottom: "24px" }}>최근 플레이한 게임</SectionTitle>
+        )}
         {histories?.map((gameHistory: GameHistory) => (
           <HistoryCard
             gameHistoryId={gameHistory.id}

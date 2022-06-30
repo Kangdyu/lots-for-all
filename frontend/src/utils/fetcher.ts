@@ -1,5 +1,4 @@
 import axios from "axios";
-import { ApiResponse, User } from "types/api";
 
 class CustomError extends Error {
   status: number;
@@ -14,7 +13,7 @@ export async function fetcher(url: string) {
   return (await axios.get(url)).data;
 }
 
-export async function userFetcher() {
+export async function authFetcher(url: string) {
   const token = localStorage.getItem("token");
   if (!token || token === "") {
     const error = new CustomError(401, "Not Authorized");
@@ -22,8 +21,8 @@ export async function userFetcher() {
   }
 
   return (
-    await axios.get<ApiResponse<User>>("/login", {
+    await axios.get(url, {
       headers: { Authorization: `Bearer ${token}` },
     })
-  ).data.result;
+  ).data;
 }

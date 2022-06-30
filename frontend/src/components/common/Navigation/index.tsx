@@ -7,7 +7,7 @@ import { NAV_ROUTES } from "constants/routes";
 import NavBarProfileCard from "./NavBarProfileCard";
 import useUser from "hooks/useUser";
 
-interface Props extends HTMLAttributes<HTMLElement> {}
+interface Props extends Omit<HTMLAttributes<HTMLElement>, "ref"> {}
 
 // TODO: 로그인 구현 시 loggedIn prop 활용하여 수정
 function Navigation({ ...props }: Props) {

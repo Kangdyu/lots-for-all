@@ -97,6 +97,10 @@ export class UsersService {
   }
 
   async create(createUserDto: CreateUserDto): Promise<CommonResponse<UserInfoDto>> {
+    if (await this.usersRepository.findOneBy({ email: createUserDto.email })) {
+      throw new BadRequestException('email already exists');
+    }
+
     const createdUser: User = await this.usersRepository.save(
       await this.createUserEntityByDto(createUserDto)
     );

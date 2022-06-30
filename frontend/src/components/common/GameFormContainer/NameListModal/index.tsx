@@ -29,7 +29,6 @@ function NameListModal({ show, onClose, onButtonClick, setGroup }: Props) {
     <Modal
       show={show}
       title="명단에서 추가"
-      buttonText="추가"
       onClose={onClose}
       showButton={false}
       onButtonClick={onButtonClick}

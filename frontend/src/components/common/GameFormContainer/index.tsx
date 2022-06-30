@@ -12,6 +12,7 @@ import {
 import Button from "../Button";
 import SectionTitle from "../SectionTitle";
 import NameListModal from "./NameListModal";
+import SaveGroupModal from "./SaveGroupModal";
 import {
   Flex,
   NameList,
@@ -56,7 +57,11 @@ const GameFormContainer = forwardRef((props: Props, ref: Ref<GameFormValues>) =>
   const handleNameListButtonClick = useCallback(() => {
     setShowNameListModal(true);
   }, []);
-  const addNamesFromNameList = useCallback(() => {}, []);
+
+  const [showSaveGroupModal, setShowSaveGroupModal] = useState(false);
+  const handleSaveGroupButtonClick = useCallback(() => {
+    setShowSaveGroupModal(true);
+  }, []);
 
   useImperativeHandle(ref, () => ({
     title: titleInputRef.current?.value,
@@ -114,17 +119,23 @@ const GameFormContainer = forwardRef((props: Props, ref: Ref<GameFormValues>) =>
           ))}
           <br />
         </NameList>
-        {!loggedOut && <Button css={{ display: "block", margin: "0 auto" }}>명단 저장</Button>}
+        {!loggedOut && (
+          <Button css={{ display: "block", margin: "0 auto" }} onClick={handleSaveGroupButtonClick}>
+            명단 저장
+          </Button>
+        )}
       </NameListContainer>
 
       <NameListModal
         show={showNameListModal}
         onClose={() => setShowNameListModal(false)}
-        onButtonClick={() => {
-          addNamesFromNameList();
-          setShowNameListModal(false);
-        }}
         setGroup={setNameList}
+      />
+
+      <SaveGroupModal
+        show={showSaveGroupModal}
+        onClose={() => setShowSaveGroupModal(false)}
+        members={nameList.map((member) => member.name)}
       />
     </>
   );

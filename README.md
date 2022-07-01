@@ -23,7 +23,7 @@ $ git clone https://github.com/Kangdyu/lots-for-all.git
 ```bash
 $ cd /frontend
 $ npm install
-$ npm start
+$ npm run dev
 ```
 
 ### 2-2. Installation & Start (Backend)
@@ -31,7 +31,7 @@ $ npm start
 ```bash
 $ cd /backend
 $ npm install
-$ npm start
+$ npm run start:dev
 ```
 
 ### 2-3. DB Config Settings

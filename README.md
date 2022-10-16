@@ -1,6 +1,14 @@
-# 모두의 추첨
+# 모두의 추첨 - 매번 하는 추첨, 기록하고 저장해보세요!
 
-2022년도 여름방학 해커톤 1팀 레포지토리
+## 룰렛, 경마와 같은 긴장감 넘치는 뽑기 게임!
+* 자주 추첨을 해야 하는 친구들 목록을 저장하고 불러와서 빠르게 게임을 시작해보세요!
+* 어제 한 추첨 결과가 필요한데 기억나지 않는다구요? 추첨 기록을 보세요!
+* 추첨 기록 그대로 똑같은 추첨을 원클릭으로!
+
+![image](https://user-images.githubusercontent.com/86560973/196027416-f22caa2d-63ae-4e5c-b787-70c4001bede2.png)
+![image](https://user-images.githubusercontent.com/86560973/196027433-f30e2db8-3c78-4320-9314-f2bff419cb63.png)
+![image](https://user-images.githubusercontent.com/86560973/196027437-9b7b058b-cf1f-494e-bda4-846744a84468.png)
+
 
 ## Developers
 

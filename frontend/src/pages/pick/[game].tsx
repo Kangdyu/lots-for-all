@@ -25,7 +25,7 @@ export default GamePage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: GAMES.map((game) => ({ params: { game } })),
+    paths: GAMES.slice(0, 2).map((game) => ({ params: { game } })),
     fallback: false,
   };
 };
